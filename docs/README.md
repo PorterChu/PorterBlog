@@ -1,3 +1,30 @@
-# Headline
+### 总体介绍
 
-> An awesome project.
+本站主要记录作者个人总结的各类软硬件技术信息，目的是将零碎知识点规整化、网络化，以点破面最终串接成完整的技术栈体系
+
+#### 本站声明
+
+- 学习的过程不免参考和借鉴，如有侵权，请联系作者修改
+
+#### 本站守则
+
+- 文档轻量化：所有文档均基于[Markdown]编写
+- 文档自动化：基于git、docsify工具自动生成html页面
+- 文档代码化：
+  - 本文档系统视同源码的一部分
+  - 绘图尽量使用2种工具，用字符来储存图，以便提高图片可利用率
+    1. [Draw.io](https://draw-io.en.softonic.com/)
+    2. [PlantUML](https://sourceforge.net/projects/plantuml/)
+
+#### 本站License
+
+- ZPL
+
+#### 本站发展里程碑
+
+- 2020.7.25：创建
+
+### 作者与联系方式
+
+- 作者：PorterChu
+- 邮箱：946846828@qq.com

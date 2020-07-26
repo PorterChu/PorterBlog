@@ -6,18 +6,79 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/dark.css" title="Dark">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
 </head>
 <body>
   <div id="app"></div>
   <script>
-    window.$docsify = {
-      name: '',
-      repo: '',
-	    loadSidebar: true,
-      coverpage: true
-    }
+  window.$docsify = {
+            loadSidebar: true,
+            loadNavbar: true,
+            relativePath: true,
+            notFoundPage: '404.md',
+            auto2top: true,
+            coverpage: true,
+            autoHeader: true,
+            subMaxLevel: 3,
+            themeColor: '#88b04b',
+            topMargin: 90, // default: 0
+            //   logo: '/lib/Engineer.svg',
+            name: '<div><b style="font-size: 32px">首页</b></div>',
+            repo: 'https://github.com/PorterChu/Myblog',
+            //   formatUpdated: '{MM}/{DD} {HH}:{mm}',
+            search: 'auto',
+            pagination: {
+                previousText: '上一篇',
+                nextText: '下一篇',
+                crossChapter: true,
+                crossChapterText: true,
+            },
+            copyCode: {
+                buttonText : 'Copy to clipboard',
+                errorText  : 'Error',
+                successText: 'Copied'
+            },
+            footer: {
+                copy: '<span>ZTE copyright; 2020</span>',
+                auth: '<b style="font-size: 12px">by PorterChu</b>',
+                pre: '<hr/>',
+                style: 'text-align: right;',
+                class: 'className',
+            },
+        }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/docsify-pagination.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/docsify-plantuml.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/docsify-copy-code.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/docsify-footer-enh.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/watermark.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-vim.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-shell.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-clike.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-c.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-cpp.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-csharp.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-python.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-go.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-markdown.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-java.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-javascript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-css.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-json.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-yaml.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-sql.min.js"></script>
+  <script>
+    watermark.load({ 
+        watermark_txt: "PorterChu",
+        watermark_color:'#4f4f4f',
+        watermark_alpha:0.07,
+        // watermark_parent_node:'main'
+    })
+    </script>
 </body>
 </html>
