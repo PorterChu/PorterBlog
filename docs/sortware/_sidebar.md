@@ -1,1 +1,1 @@
-* [嵌入式C函数库](./linux_c.md)
+* [C语言](./c/README.md)

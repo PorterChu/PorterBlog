@@ -1,8 +1,5 @@
-- 总体介绍
-  - 本站声明
-  - 本站守则
-  - 本站License
-  - 本站发展里程碑
-- 作者与联系方式
-  - 作者
-  - 邮箱
+* [硬件区](./hardware/README.md)
+  * [Layout绘图](./hardware/layout/README.md)
+  * [IC设计与应用](./hardware/IC_design_application/README.md)
+* [软件区](./sortware/README.md)
+  * [C语言](./sortware/c/README.md)
