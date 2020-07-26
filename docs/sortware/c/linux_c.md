@@ -1,3 +1,3 @@
-## getopt函数
+## 1. getopt函数
 
-## getopt_long函数
+## 2. getopt_long函数
