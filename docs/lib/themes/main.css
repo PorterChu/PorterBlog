@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'Source Han Sans CN';
+    src: url('/lib/font/SourceHanSansCN-Normal.otf');
+}
+@font-face {
+    font-family: 'Source Han Sans HW SC';
+    src: url('/lib/font/SourceHanSansHWSC-Regular.otf');
+}
+img {
+    display:block;
+    margin:auto;
+    max-width:100%;
+    background-color:#dddddd;
+}
+[title="trans"]{
+    background-color:transparent;
+}
+object {
+    display:block;
+    margin:auto;
+}
+embed {
+    display:block;
+    margin:auto
+}
+p{
+    text-indent: 2em;
+}
