@@ -2,32 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Myblog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/dark.css" title="Dark">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/dark.css">
 </head>
 <body>
   <div id="app"></div>
+  <!-- docsify-edit-on-github -->
+  <!-- <script src="//unpkg.com/docsify-edit-on-github/index.js"></script> -->
   <script>
   window.$docsify = {
             loadSidebar: true,
             loadNavbar: true,
             relativePath: true,
-            //notFoundPage: '404.md',
+            //  homepage: 'README.md',
+            notFoundPage: '404.md',  
+            relativePath: true, // 启用相对路径
             auto2top: true,
             coverpage: true,
             autoHeader: true,
+            maxLevel: 5,//最大支持渲染的标题层级
             subMaxLevel: 2,
-            themeColor: '#88b04b',
-            topMargin: 90, // default: 0
+            themeColor: '#88b04b',//替换主题色
+            executeScript: true, //执行script脚本
+            mergeNavbar: true,
             //   logo: '/lib/Engineer.svg',
+            topMargin: 90, // default: 0
             name: '<div><b style="font-size: 32px">首页</b></div>',
             repo: 'https://github.com/PorterChu/Myblog',
             //   formatUpdated: '{MM}/{DD} {HH}:{mm}',
-            search: 'auto',
+            search: {
+                //maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+                paths: 'auto',
+                placeholder: '搜索',
+                noData: '未找到结果',
+                // 搜索标题的最大程级, 1 - 6
+                depth: 3,
+            },
             pagination: {
                 previousText: '上一篇',
                 nextText: '下一篇',
@@ -40,7 +53,7 @@
                 successText: 'Copied'
             },
             footer: {
-                copy: '<span>Porter; 2020</span>',
+                copy: '<span>Copyright 2020</span>',
                 auth: '<b style="font-size: 12px">by PorterChu</b>',
                 pre: '<hr/>',
                 style: 'text-align: right;',
@@ -48,30 +61,20 @@
             },
         }
   </script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/docsify-pagination.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/docsify-plantuml.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/docsify-copy-code.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/docsify-footer-enh.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/watermark.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-vim.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-shell.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-bash.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-clike.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-c.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-cpp.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-csharp.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-python.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-go.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-markdown.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-java.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-javascript.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-css.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-json.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-yaml.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/prism/components/prism-sql.min.js"></script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <!--Java代码高亮-->
+  <script src="//unpkg.com/prismjs/components/prism-java.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-python.js"></script>
+  <!--全文搜索,直接用官方提供的无法生效-->
+  <script src="https://cdn.bootcss.com/docsify/4.5.9/plugins/search.min.js"></script>
+  <!-- 复制到剪贴板 -->
+  <script src="//unpkg.com/docsify-copy-code"></script>
+  <!-- emoji -->
+  <script src="//unpkg.com/docsify/lib/plugins/emoji.js"></script>
+  <!-- 图片缩放 -->
+  <script src="//unpkg.com/docsify/lib/plugins/zoom-image.js"></script>
+  <!-- 字数统计 -->
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
   <script>
     watermark.load({ 
         watermark_txt: "PorterChu",
