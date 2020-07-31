@@ -4,3 +4,5 @@
   * [通信协议](./hardware/protocol/README.md)
 * [软件区](./sortware/README.md)
   * [C语言](./sortware/c/README.md)
+* [杂记](./other/README.md)
+  * [Markdown](./other/markdown.md)

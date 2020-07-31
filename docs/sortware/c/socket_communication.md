@@ -2,7 +2,7 @@
 
 ### 1.1 socket背景介绍
 
-*在计算机通信领域，Socket被翻译为“套接字”，它是计算机之间进行通信的一种约定或一种方式。通过socket这种约定，一台计算机可以接收其他计算机发送的数据，也可以向其他计算机发送数据。还有一个概念叫句柄fd（file escriptor）, 从英文中直译过来，但从字面上可能不太好理解，但对比生活中耳熟能详的刀柄（刀把手，用来把控刀的使用）、门柄（门把手，可以控制门的开关）也就不难理解了。*
+*在计算机通信领域，Socket被翻译为“套接字”，它是计算机之间进行通信的一种约定或一种方式。通过socket这种约定，一台计算机可以接收其他计算机发送的数据，也可以向其他计算机发送数据。还有一个概念叫描述符fd（file descriptor）, 或者叫句柄，从字面上可能不太好理解，但对比生活中耳熟能详的刀柄（刀把手，用来把控刀的使用）、门柄（门把手，可以控制门的开关）就不难理解了。*
 
 *Socket起源于Unix，而Unix/Linux基本思想之一就是“一切皆文件”，都可以用“打开（open） –> 读写（write/read） –> 关闭（close）”模式来操作。Socket就是该模式的一个实现：即Socket是一种特殊的文件，一些Socket函数就是对其进行的操作（读/写IO、打开、关闭）。Socket函数返回一个整型的Socket描述符（句柄），随后的连接建立、数据传输等操作都是通过控制句柄来实现的。*
 
@@ -76,8 +76,8 @@ struct in_addr
 创建socket：
 
 ```c
-int sockfd = socket(AF_INET, SOCK_STREAM, 0);      /* <font size=2>创建TCP套接字 */
-int sockfd = socket(AF_INET, SOCK_DGRAM, 0);       / *<font size=2>创建UDP套接字 */
+int sockfd = socket(AF_INET, SOCK_STREAM, 0);      /* 创建TCP套接字 */
+int sockfd = socket(AF_INET, SOCK_DGRAM, 0);       /* 创建UDP套接字 */
 ```
 
 定义并配置结构体：

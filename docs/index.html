@@ -9,20 +9,18 @@
   <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/dark.css">
 </head>
 <body>
-  <div id="app"></div>
-  <!-- docsify-edit-on-github -->
-  <!-- <script src="//unpkg.com/docsify-edit-on-github/index.js"></script> -->
+  <div id="app">Please wait...</div>
   <script>
   window.$docsify = {
             loadSidebar: true,
             loadNavbar: false,
             relativePath: true,
-            //  homepage: 'README.md',
             notFoundPage: '404.md',  
+            routerMode: 'history', //设置路由，浏览网页不会显示#
             relativePath: true, // 启用相对路径
             auto2top: true,
             coverpage: true,
-            autoHeader: true,
+            autoHeader: false,
             maxLevel: 5,//最大支持渲染的标题层级
             subMaxLevel: 2,
             themeColor: '#88b04b',//替换主题色
@@ -30,6 +28,7 @@
             mergeNavbar: true,
             //   logo: '/lib/Engineer.svg',
             topMargin: 90, // default: 0
+            nameLink: '/',
             name: '<div><b style="font-size: 32px">首页</b></div>',
             repo: 'https://github.com/PorterChu/Myblog',
             //   formatUpdated: '{MM}/{DD} {HH}:{mm}',
@@ -38,7 +37,6 @@
                 paths: 'auto',
                 placeholder: '搜索',
                 noData: '未找到结果',
-                // 搜索标题的最大程级, 1 - 6
                 depth: 3,
             },
             count: {
@@ -107,13 +105,5 @@
   <script src="//unpkg.com/docsify/lib/plugins/zoom-image.js"></script>
   <!-- 字数统计 -->
   <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
-  <script>
-    watermark.load({ 
-        watermark_txt: "PorterChu",
-        watermark_color:'#4f4f4f',
-        watermark_alpha:0.07,
-        // watermark_parent_node:'main'
-    })
-    </script>
 </body>
 </html>
