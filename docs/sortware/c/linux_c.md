@@ -339,3 +339,137 @@ optind从argv[5]处检索‘--’，在long_options中检索到nonarg，确认�
 #### 2.3.2 getopt_long与getopt_long_only对比
 
 - getopt_long_only函数定义与getopt_long一摸一样，使用方法也一致，唯一的区别在于，使用getopt_long_only函数时，对于长选项字符串不需要使用双杠号‘--’，只用单杠号‘-’就行（可以自行用上述代码测试）。
+
+## 3. setsockopt函数
+
+### 3.1 介绍
+
+在socket网络通信中，通常需要设置或者获取与某个套接字关联的选项，而套接字处于多层协议中，可用setsockopt()来设置套接字选项状态，在man手册中查到函数定义及头文件如下：
+
+```c
+#include <sys/types.h>          /* 为代码更好的移植性一般会加上 */
+#include <sys/socket.h>
+int setsockopt(int sockfd, int level, int optname, const void *optval, socklen_t optlen);
+```
+
+- 传参说明：
+
+```c
+sockfd: 套接字描述符
+level：level可以理解为解析什么选项，包括SOL_SOCKET(套接字选项)、IPPROTO_IP(IP协议选项)、IPPROTO_TCP(TCP协议选项)，操作不同选项就要选择对应的选项协议
+optname：需要访问的选项名，这部分较多，下面会用表格列出来
+optval：这是一个指针变量，指向存放选项值的缓冲区，简单理解为一个缓冲区的头指针
+optlen：表示optval指向的缓冲区的大小
+```
+
+optname分类如下表所示：
+
+|level(级别)|optname(选项名)|getsockopt|setsockopt|说明|数据类型|
+|:--------:|:-----------:|:----:|:----:|:----:|:----:|
+|SOL_SOCKET|SO_BROADCAST    |★       |★        |允许广播方式传输数据|BOOL|
+|SOL_SOCKET|SO_DEBUG        |★       |★        |允许调试|int|
+|SOL_SOCKET|SO_DONTROUTE    |★       |★        |送出的数据包不要利用路由设备来传输|int|
+|SOL_SOCKET|SO_ERROR        |★       |          |返回socket已发生的错误原因|int|
+|SOL_SOCKET|SO_KEEPALIVE    |★       |★        |保持连接|int|
+|SOL_SOCKET|SO_LINGER       |★       |★        |延迟关闭连接|struct linger|
+|SOL_SOCKET|SO_OOBINLINE    |★       |★        |让接收到的带外数据继续在线留存|int|
+|SOL_SOCKET|SO_RCVBUF       |★       |★        |接收缓冲区大小|int|
+|SOL_SOCKET|SO_SNDBUF       |★       |★        |发送缓冲区大小|int|
+|SOL_SOCKET|SO_RCVLOWAT     |★       |★        |接收缓冲区下限|int|
+|SOL_SOCKET|SO_SNDLOWAT     |★       |★        |发送缓冲区下限|int|
+|SOL_SOCKET|SO_RCVTIMEO     |★       |★        |接收超时|struct timeval|
+|SOL_SOCKET|SO_SNDTIMEO     |★       |★        |发送超时|struct timeval|
+|SOL_SOCKET|SO_REUSEADDR    |★       |★        |允许重用本地地址|BOOL|
+|SOL_SOCKET|SO_TYPE         |★       |          |获得套接字类型|int|
+
+- 返回值：
+
+setsockopt()是int型函数，执行成功后返回0，失败返回-1，同时当函数执行失败时，根据errno可以识别失败原因：
+
+```c
+EBADF：sockfd不是有效的文件描述符
+EFAULT：optval指向的内存并非有效的进程空间
+EINVAL：在调用setsockopt函数时，optlen无效
+ENOPROTOOPT：指定的协议层不能识别选项
+ENOTSOCK：sockfd描述的不是套接字
+```
+
+### 3.2 使用
+
+- 优雅断开和强制断开
+
+选项名SO_LINGER的数据类型是struct linger结构：
+
+```c
+#include <arpa/inet.h>
+struct linger
+{
+　　int l_onoff;
+　　int l_linger;
+};
+```
+
+struct liner结构体中两个变量l_onoff和l_linger组合使用，共可以组合成三种断开连接的方式：
+
+1. l_onoff==0 && l=linger忽略：close()执行立刻返回，底层会将未发送完的数据继续发送后再释放资源，即优雅断开；
+2. l_onoff!=0 && l_linger==0：close()执行立刻返回，底层不会发送未发送的数据，而是通过一个REST包强制关闭socket描述符，即强制断开；
+3. l_onoff!=0 && l_linger>0：close()执行不会立刻返回，内核会延迟一段时间，这个时间就由l_linger的值来决定。如果timeout时间到达之前将所有的数据发送出去并接收到另一端的确认，close()会返回正确，socket描述符优雅的断开；否则close()会直接返回错误值，还未发送的数据会丢失，socket描述符被强制断开。
+
+```c
+struct linger ling = {0, 0};
+setsockopt(socketfd, SOL_SOCKET, SO_LINGER, (void*)&ling, sizeof(ling));  //设置socket通信强制断开，未发送的数据直接丢弃
+```
+
+- 重用本地地址和端口
+
+服务器的IP端口在进行socket通信时是进行bind()绑定的，所以当服务器使用close()关闭后不会立即关闭，会经历一段等待时间(TIME_WAIT,2MSL)，如果这时候还想要继续使用此socket，可以使用SO_REUSEADDR进行配置，****这个配置要放在bind函数之前**，那么在socket进入TIME_WAIT状态时可以重用此IP端口；而客户端的端口是随机分配的，使用close()关闭后不会影响下次连接：
+
+```c
+BOOL bReuseaddr=TRUE;
+setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR,(const char*)&bReuseaddr,sizeof(BOOL));
+```
+
+*注意：对于BOOL类型的选项，0表示disable，1表示enable。*
+
+- 设置收发数据的时限
+
+有时因为网络状况等原因，执行send()\recv()或write()\read()收发数据不能预期进行，通过SO_SNDTIMEO和SO_RCVTIMEO设置收发数据的时限：
+
+```c
+int nNetTimeout=1000;                                                              //设置1秒
+setsockopt(socket, SOL_S0CKET,SO_SNDTIMEO, (char *)&nNetTimeout, sizeof(int)); 　　//发送时限
+setsockopt(socket, SOL_S0CKET,SO_RCVTIMEO, (char *)&nNetTimeout, sizeof(int));     //接收时限
+```
+
+- 设置收发数据的缓冲区大小
+
+每个socket都有一个发送缓冲区和接收缓冲区，TCP和UDP通信都将接收到的数据保存在缓冲区等待进程来读取，TCP socket接收缓冲区不可能溢出，因为TCP协议有流量控制，不允许发送端发超过缓冲区大小的数据；UPD协议没有流量控制，发送端只管发送数据，接收端超出缓冲区就会被丢弃，而且发送端数据发送频繁时，接收端缓冲区内的数据会被覆盖，造成数据丢失。
+
+可以通过SO_SNDBUF和SO_RCVBUF来设置socket通信收发数据缓冲区的大小：
+
+```c
+int nRecvBuf=32*1024;                                                             //设置为32K
+setsockopt(socket, SOL_SOCKET, SO_RCVBUF, (const char*)&nRecvBuf, sizeof(int));   //接收缓冲区
+　　
+int nSendBuf=32*1024;                                                             //设置为32K
+setsockopt(socket, SOL_SOCKET, SO_SNDBUF, (const char*)&nSendBuf, sizeof(int));   //发送缓冲区
+```
+
+*注意：SO_RCVBUF缓冲区的设置，在客户端程序中要在connect()之前，在服务器程序中要在listen()之前。缓冲区的大小设置不是无限的，必须小于内核设置的上限值，可以通过`sysctl -a`来查看内核上限。*
+
+- 设置UDP数据广播特性
+
+```c
+BOOL bBroadcast=TRUE;
+setsockopt(socket, SOL_SOCKET, SO_BROADCAST, (const char*)&bBroadcast, sizeof(BOOL));
+```
+
+## 4. getsockopt函数
+
+- 函数定义：
+
+```c
+int getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
+```
+
+函数介绍与使用与setsockopt()一致.
