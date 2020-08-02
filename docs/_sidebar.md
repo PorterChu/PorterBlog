@@ -6,3 +6,4 @@
   * [C语言](./sortware/c/README.md)
 * [杂记](./other/README.md)
   * [Markdown](./other/markdown.md)
+  * [华硕PC机拆解](./ASUS_PC.md)
