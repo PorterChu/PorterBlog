@@ -464,10 +464,53 @@ setsockopt(socket, SOL_SOCKET, SO_BROADCAST, (const char*)&bBroadcast, sizeof(BO
 
 ## 4. getsockopt函数
 
+getsockopt是用来获取套接字选项状态函数，其函数使用和参数介绍与setsockopt一致，就不重复介绍了。
+
 - 函数定义：
 
 ```c
 int getsockopt(int sockfd, int level, int optname, void *optval, socklen_t *optlen);
 ```
 
-函数介绍与使用与setsockopt()一致.
+## 5. printf、sprintf和snprintf函数
+
+### 5.1 printf函数
+
+printf函数是标准输出函数，功能是将参数format中的字符串进行格式化，然后将结果写出到标准输出设备(控制台、显示屏等)，直到出现字符串结束`\0`为止，通常我们在代码中用printf函数来打印log信息进行调试，根据调试信息来排查代码错误
+
+```c
+#include<stdio.h>
+int printf(const char * format, ...);
+```
+
+在参数format字符串中可以包含三种字符类型：
+
+- 一般文本，写入到双引号中，直接输出
+- ASCII控制字符，如`\t`(空格符)、`\n`(换行符)等，其中`\`是一个转义字符，如果`\\`会直接输出`\`
+- 格式转换字符，格式转换需要添加`%`(百分比符号)，且格式转换需要跟类型匹配起来，否则会报类型不匹配的warning，只有当使用两个`%%`时会输出`%`，如下列举一些需要注意的格式转换字符
+
+```c
+%d    参数类型为int或者*p(指针的解引用，相当于int)
+%ld   参数类型为long [int]
+%lld  参数类型为long long [int]
+%f    参数类型为float
+%lf   参数类型为double
+```
+
+### 5.2 sprintf函数
+
+sprintf函数功能将参数format字符串进行格式化后复制到str指向的数组中，直到出现字符串结束`\0`为止，其参数format字符串的格式与printf一致，但需要注意的是：**sprintf函数格式化的数据并不会输出到输出设备，而是保存在str指向的数组中，如果需要把数据打印出来，还需要额外使用printf函数打印**
+
+```c
+#include<stdio.h>
+int sprintf( char *str, const char *format, ...);
+```
+
+### 5.3 snprintf函数
+
+snprintf函数功能上与sprintf函数一致，也是将参数format字符串进行格式化后复制到str指向的数组中，唯一不同的是：**snprintf函数最多只复制n-1个有效字符(因为`\0`会占用一个字节)，如果数据超出n-1个字节，数据就会被截断，str数组中保留前n-1个字节的数据，后面的数据会被丢弃，这一点尤为重要，snprintf函数会主动对数据长度进行截断，实际编译代码时不会因为数组溢出而报错，但是sprintf函数并不会主动截断数据长度，当str所指向的数组size小于等于实际的数据长度时，则编译代码会报数组溢出错误**
+
+```c
+#include<stdio.h>
+int snprintf(char *str, size_t size, const char *format, ...);
+```

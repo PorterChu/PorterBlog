@@ -64,7 +64,7 @@ Markdown支持有序列表和无序列表，不支持多级列表
     ```
 ```
 
-### 5. 设置字体
+### 5. 粗体字、斜体字
 
 Markdown可以使用如下方法设置字体：
 
@@ -140,4 +140,24 @@ Markdown制作表格使用`|`来分隔不同的单元格，使用`-`来分隔表
 | :-----| ----: | :----: |
 | 单元格 | 单元格 | 单元格 |
 | 单元格 | 单元格 | 单元格 |
+```
+
+### 12. 格式缩进
+
+可以使用转义字符`&ensp;`或者`&emsp`来进行进行格式缩进：
+- `&ensp;`：占据的宽度相当于半个中文宽度，如需使用此转义字符进行首行缩进2个字符则要在文本前面添加4组；
+- `&emsp;`：占据的宽度相当于整个中文宽度，如需使用此转义字符进行首行缩进2个字符则要在文本前面添加2组；
+
+```markdown
+&ensp;&ensp;&ensp;&ensp;Markdown格式缩进
+&emsp;&emsp;Markdown格式缩进
+```
+
+### 13. 字体大小、颜色
+
+可以使用HTML格式来设置Markdown文本中字体大小和颜色，在所需要设置的文本之前加上<font size=xxx>或<font color=xxx>的前缀，同时也要在文本最后加上</font>
+
+```markdown
+<font size=36>This is a markdown blog</font>
+<font color=green>This is a markdown blog</font>
 ```
