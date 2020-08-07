@@ -7,3 +7,4 @@
 * [杂记](./other/README.md)
   * [Markdown](./other/markdown.md)
   * [Git使用指南](./other/git.md)
+  * [Docsify配置](./docsify.md)

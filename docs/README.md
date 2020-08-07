@@ -9,12 +9,10 @@
 ### 本站守则
 
 - 文档轻量化：所有文档均基于[Markdown](./other/markdown.md)编写
-- 文档自动化：基于Github\Docsify工具自动生成HTML页面
+- 文档自动化：基于[Git](./other/git.md)和[Docsify](./other/docsify.md)自动生成HTML页面
 - 文档代码化：
   - 本文档系统视同源码的一部分
-  - 绘图尽量使用2种工具，用字符来储存图，以便提高图片清晰度和可利用率
-    1. [Draw.io](https://draw-io.en.softonic.com/)
-    2. [PlantUML](https://sourceforge.net/projects/plantuml/)
+  - 绘图尽量使用[Draw.io](https://draw-io.en.softonic.com/)和[PlantUML](https://sourceforge.net/projects/plantuml/)工具，用字符来储存图，以便提高图片清晰度和可利用率
 
 ### 本站License
 
