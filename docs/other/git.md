@@ -4,15 +4,13 @@ Git是一个开源的分布式版本控制系统，在敏捷开发中广泛使�
 
 ## Git配置
 
-git config --global user.name "姓名"
-git config --global user.email "邮箱"
-git config --global color.ui auto
+- git config --global user.name "姓名"
+- git config --global user.email "邮箱"
+- git config --global color.ui auto
 
 ## Git使用
 
 ### git init--初始化仓库
-
-git init是对创建的本地仓库进行初始化，初始化完成后会生成`.git`目录，这个目录被称为“附属于该仓库的工作树”，包含了git操作所需要的所有配置，如果后期想将文件恢复到原先的状态，就可以从仓库中调取之前的哈希值，目录下的index是一个二进制文件，即为仓库的暂存区。
 
 ### git clone--获取远程仓库
 
@@ -39,11 +37,14 @@ git init是对创建的本地仓库进行初始化，初始化完成后会生成
 ### git diff--查看更改前后的差别
 
 - git diff                      //查看工作区和暂存区的差别
+- git diff                      //查看
 - git diff HEAD                 //查看暂存区与版本库的差别
 
 *注意：`+`表示新添加的行，`-`表示被删除的行*
 
 ### git pull
+
+- git pull --rebase
 
 ### git rebase
 

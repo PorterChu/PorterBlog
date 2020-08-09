@@ -514,3 +514,132 @@ snprintf函数功能上与sprintf函数一致，也是将参数format字符串�
 #include<stdio.h>
 int snprintf(char *str, size_t size, const char *format, ...);
 ```
+
+## 6. putc、puts、fputc、fputs和putchar函数
+
+### 6.1 putc函数和fputc函数
+
+putc和fputc函数的函数定义相同，将字符c写入指定的数据流(即文件或标准输出)中，如果写入成功则返回字符c所对应的ASCII码十进制数字，写入失败则返回EOF(-1)，对于`\0`表示的空字符也一样会写入并返回ASCII对应数字0。
+
+```c
+#include <stdio.h>
+int putc(int c, FILE *stream);
+int fputc(int c, FILE *stream);
+```
+
+参数`int c`可以是单个char型字符，也可以是char型字符串，但putc和fputc函数每次只写入1个字符，如果需要输出字符串，则需要重复使用此函数进行写入，通常对于字符串，会使用puts或fputs函数进行替代。
+
+参数`FILE *stream`可以写入到指定文件中，也可以写入到标准输出设备，通常为显示屏：
+
+```c
+fputc('c', fp);     //写入到fp指向的文件中
+fputc('c',stdout);  //写入到屏幕上显示
+```
+
+### 6.2 puts函数和fputs函数
+
+puts和fputs函数在函数定义稍微有些区别，puts函数功能是将字符串写入到标准输出设备中显示并换行，也就是会自动在字符串结尾添加`\n`进行换行，打印效果类似printf函数，但puts函数不可以设置输出格式化，以`\0`空字符为结束标识：
+
+```c
+#include <stdio.h>
+int puts(const char *s);
+```
+
+而fputs函数则在puts函数上做了一层封装，将字符串写入到指定文件中或者标准输出设备，以`\0`空字符为结束标识，区别是fputs函数并不会在字符串结尾添加`\n`换行符，使用fputs函数需要换行则要手动添加：
+
+```c
+#include <stdio.h>
+int fputs(const char *s, FILE *stream);
+```
+
+### 6.2 putchar函数
+
+putchar函数功能类同于putc函数，将字符写入到标准输出设备：
+
+- 定义：
+
+```c
+#include <stdio.h>
+int putchar(int c);    
+```
+
+- 使用：
+
+```c
+putchar('c');      //等同于putc('c',stdout)；
+```
+
+## 7. getc、gets、fgetc、fgets、getchar和ungetc函数
+
+### 7.1 getc函数和fgetc函数
+
+getc函数和fgetc函数的函数定义和功能是一样的，都是从数据流(即文件或标准输入设备)中读取字符，区别在于putc函数可以作为宏来使用，而fputc函数只能作为函数来调用，实际使用中可以忽略区别，读取成功便返回所读取到的字符，读取失败则返回EOF(-1):
+
+- 定义：
+
+```c
+#include <stdio.h>
+int getc(FILE *stream);
+int fgetc(FILE *stream);
+```
+
+- 使用：
+
+```c
+char str;
+FILE *fp;
+fp = fopen("D:\\Linux_Ubuntu\\windows_share\\test.txt","r");
+str = putc(stdin);
+str = fputc(fp);
+```
+
+### 7.2 gets函数和fgets函数
+
+gets函数的功能是从标准输入设备中读取一行字符串到参数s所指向的缓冲区，以`\0`结尾，gets函数不会进行缓冲区溢出的检查，也就是说很有可能会从stdin读取的字符串长度超出缓冲区的长度。
+
+```c
+#include <stdio.h>
+char *gets(char *s);
+```
+
+fgetc函数的功能是从数据流中读取size-1大小的字符串存储在参数s所指向的缓冲区中，缓冲区最后一位填充`\0`，也就是说相比于gets函数，fgets函数会进行缓冲区溢出检查，通常size的大小就是缓冲区的长度；另外gets只能从stdin中读取，而fgets函数可以从文件流中读取字符串。
+
+```c
+#include <stdio.h>
+char *fgets(char *s, int size, FILE *stream);
+```
+
+### 7.3 getchar函数
+
+getchar函数功能类似getc(stdin)，都是从stdin中读取单个字符。
+
+```c
+#include <stdio.h>
+int getchar(void);
+```
+
+### 7.4 ungetc函数
+
+ungetc函数的功能是在getc\getchar等函数从stdin中读取字符时，当这个字符不是我们想要的时候，就将这个字符退回到缓冲区，退回的字符由下一个字符读取函数来读取(这里的意思是当前的getc或getchar函数执行完成，由后续的函数来获取退回到缓冲区的字符)
+
+- 定义：
+
+```c
+#include <stdio.h>
+int ungetc(int c, FILE *stream);
+```
+
+- 使用
+
+```c
+int i = 0;
+char ch;
+while((ch = getchar()) != EOF && isdigit(ch))
+{
+    i = 10 * i + ch - 48;                         //getchar函数读取英文字母或数字并将其转为整数
+}                                                
+if (ch != EOF)
+{
+    ungetc(ch,stdin);                             //把一个非英文或数字字符退回输入流
+}
+```
