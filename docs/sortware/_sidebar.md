@@ -1,1 +1,2 @@
-* [C语言](./c/README.md)
+* [C编程](./c/README.md)
+* [Shell编程](./shell.md)

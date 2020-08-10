@@ -20,10 +20,11 @@ Git是一个开源的分布式版本控制系统，在敏捷开发中广泛使�
 
 - git add 文件名                //添加单个文件
 - git add .                    //添加全部文件
-- git add -A(A是All的缩写)      //添加全部文件
+- git add -A                   //A是All的缩写，添加全部文件
 
 ### git commit--保存仓库的历史记录
-- git commit -m "添加提交说明"  //添加一行提交信息
+
+- git commit -m "提交说明"      //添加一行提交信息
 - git commit                   //记述详细提交信息
 - git commit --amend           //修改提交信息，补偿提交
 
@@ -37,7 +38,6 @@ Git是一个开源的分布式版本控制系统，在敏捷开发中广泛使�
 ### git diff--查看更改前后的差别
 
 - git diff                      //查看工作区和暂存区的差别
-- git diff                      //查看
 - git diff HEAD                 //查看暂存区与版本库的差别
 
 *注意：`+`表示新添加的行，`-`表示被删除的行*
@@ -59,7 +59,7 @@ Git是一个开源的分布式版本控制系统，在敏捷开发中广泛使�
 
 ### git checkout--创建、切换分支
 
-- git checkout -b 分支名
+- git checkout -b 分支1 origin/分支2  //创建本地分支1并切换到分支1，同时将本地分支1与远端分支2连接
 
 ### git reset--回溯历史版本
 
@@ -68,7 +68,7 @@ Git是一个开源的分布式版本控制系统，在敏捷开发中广泛使�
 
 ### git merge--合并分支
 
-- git merge --no-ff 分支名
+- git merge --no-ff 分支
 
 ### git remote
 

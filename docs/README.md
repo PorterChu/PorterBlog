@@ -12,7 +12,7 @@
 - 文档自动化：基于[Git](./other/git.md)和[Docsify](./other/docsify.md)自动生成HTML页面
 - 文档代码化：
   - 本文档系统视同源码的一部分
-  - 绘图尽量使用[Draw.io](https://draw-io.en.softonic.com/)和[PlantUML](https://sourceforge.net/projects/plantuml/)工具，用字符来储存图，以便提高图片清晰度和可利用率
+  - 绘图使用[Draw.io](https://draw-io.en.softonic.com/)和[PlantUML](https://sourceforge.net/projects/plantuml/)工具，用字符来储存图，以便提高图片清晰度和可利用率
 
 ### 本站License
 

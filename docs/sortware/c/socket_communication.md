@@ -466,14 +466,14 @@ if(value < 0)
   printf(stderr,"/***Select failed!***/\n");
   exit(EXIT_FAILURE);
  }
-else if(value == 0)    //30s检测不到客户端fd会打印消息
+else if(value == 0)                               //30s检测不到客户端fd会打印消息
  {
   printf("/***time out!***/\n");
   continue;
  }
 else
  {
-  if(FD_ISSET(0,&server_fdset))       //当客户端连接成功，通过标准输入，可以查询客户端fd
+  if(FD_ISSET(0,&server_fdset))                  //当客户端连接成功，通过标准输入，可以查询客户端fd
   {
    bzero(input_message,MAXSIZE);
    fgets(input_message,MAXSIZE,stdin);
@@ -492,7 +492,7 @@ else
    if(client_sockfd > 0)
    {
     int flag = -1;
-    for(i=0;i<CLIENT_NUM;++i)  //寻找client_fd数组中是否有剩余的空位存放客户端句柄
+    for(i=0;i<CLIENT_NUM;++i)             //寻找client_fd数组中是否有剩余的空位存放客户端句柄
      if(client_fd[i] == 0)
      {
       flag = i;
@@ -541,10 +541,10 @@ int main()
   tv.tv_usec = 0;
   switch(select(0, NULL, NULL, NULL, &tv))
   {
-   case -1:                     /* 错误 */
+   case -1:                        /* 错误 */
           printf("Error!\n");
           break;
-   case 0:                      /* 超时 */
+   case 0:                         /* 超时 */
           printf("timeout expires.\n");
           break;
    default:
@@ -605,3 +605,5 @@ if(fpid == 0)                /* 判断是否为子进程 */
 *&emsp;&emsp;注意：创建的子进程在客户端结束通信时一定要关闭，否则冗余的进程会一直存在着，占用多高的CPU内存影响报文处理。*
 
 &emsp;&emsp;当然fork函数的应用还有很多，涉及到的其他函数也有很多，譬如可以通过getpid和getppid函数来获取进程识别码，通过识别码也可以确认当前进程是父进程还是子进程，同时也可以通过识别码来创建临时文件。
+
+## 7. TCP协议之三次握手、四次挥手

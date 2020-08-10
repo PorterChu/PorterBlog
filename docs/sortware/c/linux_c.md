@@ -527,7 +527,7 @@ int putc(int c, FILE *stream);
 int fputc(int c, FILE *stream);
 ```
 
-参数`int c`可以是单个char型字符，也可以是char型字符串，但putc和fputc函数每次只写入1个字符，如果需要输出字符串，则需要重复使用此函数进行写入，通常对于字符串，会使用puts或fputs函数进行替代。
+参数`int c`可以是单个char型字符，也可以是char型字符串，但putc和fputc函数每次只写入1个字符，如果需要输出字符数组，则需要重复使用此函数进行写入，通常对于字符串，会使用puts或fputs函数进行替代。
 
 参数`FILE *stream`可以写入到指定文件中，也可以写入到标准输出设备，通常为显示屏：
 
