@@ -7,6 +7,6 @@
   * [Shell编程](./sortware/shell.md)
   * [熟练掌握Makefile](./sortware/makefile.md)
 * [杂记](./other/README.md)
-  * [Markdown](./other/markdown.md)
-  * [Git使用指南](./other/git.md)
+  * [Markdown语法](./other/markdown.md)
+  * [Git指南](./other/git.md)
   * [Docsify配置](./other/docsify.md)
