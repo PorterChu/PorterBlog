@@ -5,6 +5,7 @@
 * [软件开发](./sortware/README.md)
   * [C编程](./sortware/c/README.md)
   * [Shell编程](./sortware/shell.md)
+  * [熟练掌握Makefile](./sortware/makefile.md)
 * [杂记](./other/README.md)
   * [Markdown](./other/markdown.md)
   * [Git使用指南](./other/git.md)

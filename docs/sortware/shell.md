@@ -70,11 +70,11 @@ source test.sh
 ```shell
 porter@ubuntu:~/windows_share$ touch test.sh   //创建脚本文件
 porter@ubuntu:~/windows_share$ vim test.sh     //写入`echo $$`用来输出PID
-porter@ubuntu:~/windows_share$ . test.sh       //在当前进程中打开脚本
+porter@ubuntu:~/windows_share$ . test.sh       //在当前进程中执行脚本
 18100                                          //当前进程ID
 porter@ubuntu:~/windows_share$ . test.sh
 18100                                          //当前进程ID
-porter@ubuntu:~/windows_share$ bash test.sh    //在新进程中打开脚本
+porter@ubuntu:~/windows_share$ bash test.sh    //在新进程中执行脚本
 4802                                           //新进程ID
 porter@ubuntu:~/windows_share$ bash test.sh
 5035                                           //新进程ID

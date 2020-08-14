@@ -1,6 +1,6 @@
 ## Docsify介绍
 
-&emsp;&emsp;docsify是一款神奇的文档站点生成器，可以只能的加载和解析[Markdown](/docs/other/markdown.md)文件并生成本地网站`http://losthost:3000`供浏览观看，当然如果不满足于只能自己本地观看，想要生成固定的网址供他人浏览，也可以搭载Github工具通过git生成属于自己的个人网站，下面就来看看如何配置docsify站点。
+&emsp;&emsp;docsify是一款神奇的文档站点生成器，可以直接加载和解析[Markdown](/docs/other/markdown.md)文件并生成本地网站`http://losthost:3000`供浏览观看，当然如果不满足于只能自己本地观看，想要生成固定的网址供他人浏览，也可以搭载Github工具通过git生成属于自己的个人网站，下面就来看看如何配置docsify站点。
 
 ## Docsify配置
 
