@@ -452,8 +452,8 @@ timeout.tv_usec = 0;
 ...
 if(value == 0)                                      /*30s检测不到客户端fd会打印消息*/
 {
- printf("/***time out!***/\n");
- continue;
+    printf("/***time out!***/\n");
+    continue;
 }
 ```
 
@@ -462,55 +462,55 @@ if(value == 0)                                      /*30s检测不到客户端fd
 ```c
 int value = select(fd_num+1,&server_fdset,NULL,NULL,&timeout);
 if(value < 0)
- {
-  printf(stderr,"/***Select failed!***/\n");
-  exit(EXIT_FAILURE);
- }
+{
+    printf(stderr,"/***Select failed!***/\n");
+    exit(EXIT_FAILURE);
+}
 else if(value == 0)                               //30s检测不到客户端fd会打印消息
- {
-  printf("/***time out!***/\n");
-  continue;
- }
+{
+    printf("/***time out!***/\n");
+    continue;
+}
 else
- {
-  if(FD_ISSET(0,&server_fdset))                  //当客户端连接成功，通过标准输入，可以查询客户端fd
-  {
-   bzero(input_message,MAXSIZE);
-   fgets(input_message,MAXSIZE,stdin);
-   for(i=0;i<CLIENT_NUM;++i)
-   {
-    if(client_fd[i] != 0)
+{
+    if(FD_ISSET(0,&server_fdset))                  //当客户端连接成功，通过标准输入，可以查询客户端fd
     {
-     printf("client_fd[%d]=%d\n",i,client_fd[i]);
+        bzero(input_message,MAXSIZE);
+        fgets(input_message,MAXSIZE,stdin);
+        for(i=0;i<CLIENT_NUM;++i)
+        {
+            if(client_fd[i] != 0)
+            {
+                printf("client_fd[%d]=%d\n",i,client_fd[i]);
+            }
+        }
     }
-   }
-  }
-  if(FD_ISSET(sockfd,&server_fdset))
-  {
-   int  sin_size = sizeof(struct sockaddr_in);
-            client_sockfd = accept(sockfd, (struct sockaddr *)(&client_addr), &sin_size);
-   if(client_sockfd > 0)
-   {
-    int flag = -1;
-    for(i=0;i<CLIENT_NUM;++i)             //寻找client_fd数组中是否有剩余的空位存放客户端句柄
-     if(client_fd[i] == 0)
-     {
-      flag = i;
-      client_fd[i] = client_sockfd;
-      break;
-     }
-    if(flag >= 0)
-                    printf("/***success to add a new client[%d]***/\n",flag);
-                else                      //当客户端超出服务器可接收的范围，会反馈无法加入的消息
+    if(FD_ISSET(sockfd,&server_fdset))
     {
-     char full_message[]="Client is full, can not join now!\n";
-     bzero(input_message,MAXSIZE);
-     strncpy(input_message,full_message,MAXSIZE);
-     send(client_sockfd,input_message,MAXSIZE,0);
+        int sin_size = sizeof(struct sockaddr_in);
+        client_sockfd = accept(sockfd, (struct sockaddr *)(&client_addr), &sin_size);
+        if(client_sockfd > 0)
+        {
+            int flag = -1;
+            for(i=0;i<CLIENT_NUM;++i)             //寻找client_fd数组中是否有剩余的空位存放客户端句柄
+            if(client_fd[i] == 0)
+            {
+                flag = i;
+                client_fd[i] = client_sockfd;
+                break;
+            }
+            if(flag >= 0)
+                printf("/***success to add a new client[%d]***/\n",flag);
+            else                      //当客户端超出服务器可接收的范围，会反馈无法加入的消息
+            {
+                char full_message[]="Client is full, can not join now!\n";
+                bzero(input_message,MAXSIZE);
+                strncpy(input_message,full_message,MAXSIZE);
+                send(client_sockfd,input_message,MAXSIZE,0);
+            }
+        }
     }
-   }
-  }
- }
+}
 ```
 
 在使用select函数时，要清楚select向系统内核传递了哪些信息：
@@ -534,25 +534,25 @@ select函数可以充分利用参数timeval结构体来设置定时器的应用�
 #include <sys/time.h>
 int main()
 {
- struct timeval tv;
- while(1)
- {
-  tv.tv_sec = 1;                   /* 定时1秒 */
-  tv.tv_usec = 0;
-  switch(select(0, NULL, NULL, NULL, &tv))
-  {
-   case -1:                        /* 错误 */
-          printf("Error!\n");
-          break;
-   case 0:                         /* 超时 */
-          printf("timeout expires.\n");
-          break;
-   default:
-          printf("default\n");
-          break;
-  }
- }
- return 0;
+    struct timeval tv;
+    while(1)
+    {
+        tv.tv_sec = 1;                   /* 定时1秒 */
+        tv.tv_usec = 0;
+        switch(select(0, NULL, NULL, NULL, &tv))
+        {
+            case -1:                        /* 错误 */
+                printf("Error!\n");
+                break;
+            case 0:                         /* 超时 */
+                printf("timeout expires.\n");
+                break;
+            default:
+                printf("default\n");
+                break;
+        }
+    }
+    return 0;
 }
 ```
 
@@ -596,9 +596,9 @@ pid_t fpid;
 fpid = fork();
 if(fpid == 0)                /* 判断是否为子进程 */
 {
- close(sockfd);           /* 子进程不需要监听sockfd，只需要处理newfd实现和客户端通信
- listen_data(newfd,i);    /* newfd表示接收到客户端而创建的新的句柄，i代表客户端编号 */
- exit(0);
+    close(sockfd);           /* 子进程不需要监听sockfd，只需要处理newfd实现和客户端通信
+    listen_data(newfd,i);    /* newfd表示接收到客户端而创建的新的句柄，i代表客户端编号 */
+    exit(0);
 }
 ```
 
