@@ -643,3 +643,67 @@ if (ch != EOF)
     ungetc(ch,stdin);                             //把一个非英文或数字字符退回输入流
 }
 ```
+
+## 8. qsort函数
+
+### 8.1 介绍
+
+- 函数定义
+
+qsort函数是可以按照升序或降序对数组内nmemb个元素进行排序，升序还是降序取决于函数指针compar的设定。
+
+```c
+#include <stdlib.h>
+void qsort(void *base, size_t nmemb, size_t size, int (*compar)(const void *, const void *));
+```
+
+- 参数说明
+
+```c
+void *base:base表示需要进行比较的数组的首地址，数组类型还不明确，在使用中会将void *类型转换成char *或者int *；
+size_t nmemb:size_t类型表示一个无符号整型，实际上可以用int来代替，nmemb表示参与比较的数组元素的个数；
+size_t size:因为是数组，所以数组内元素的类型都是相同的，size表示数组元素的类型字节大小，如int占4字节，通常可以用sizeof(size_t)来表示；
+int (*compar)(const void *, const void *)):这是一个函数指针，作用是数组内的元素会两两根据函数指针的设定进行比较，如下详细介绍。
+```
+
+- compar参数
+
+qsort函数内的compar参数是一个函数指针，是一个指向函数的指针，为了区分开，这边使用compare函数来说明，原型如下：
+
+```c
+int compare(const void *p1, const void *p2)          //必须写成const void *类型，否则编译时qsort函数会报警告
+{
+ return (*(const void *)p1 - *(const void *)p2);     //升序排列，const void *会进行类型强制转换
+}
+```
+
+p1和p2是指针变量，指向数组中即将要进行比较的两个元素，const void *类型会根据实际传参强制转换成对应的类型:
+
+1. 如果compare返回值小于0，说明p1指向的数组元素小于p2指向的数组元素；
+2. 如果compare返回值等于0，说明p1指向的数组元素和p2指向的数组元素相等，这种情况两个元素前后的排序是不确定的；
+3. 如果compare返回值大于0，说明p1指向的数组元素大于p2指向的数组元素；
+
+注意：如果需要降序排列，修改compare函数内：return (*(const void *)p2 - *(const void *)p1);
+
+### 8.2 示例
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+int values[] = {40, 10, 100, 90, 40, 25};
+int compare (const void *a, const void *b)   //类型必须保持为const void *，否则会有编译警告
+{
+    return ( *(int*)b - *(int*)a );  //降序排列
+}
+int main ()
+{
+    int n = 0;
+    qsort(values, 6, sizeof(int), compare);
+    for (;n<6;++n)
+    {
+        printf("%d",values[n]);
+    }
+    printf("\n");
+    return 0;
+}
+```
