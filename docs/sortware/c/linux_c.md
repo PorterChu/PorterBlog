@@ -673,7 +673,7 @@ qsort函数内的compar参数是一个函数指针，是一个指向函数的指
 ```c
 int compare(const void *p1, const void *p2)          //必须写成const void *类型，否则编译时qsort函数会报警告
 {
- return (*(const void *)p1 - *(const void *)p2);     //升序排列，const void *会进行类型强制转换
+    return (*(const void *)p1 - *(const void *)p2);     //升序排列，const void *会进行类型强制转换
 }
 ```
 

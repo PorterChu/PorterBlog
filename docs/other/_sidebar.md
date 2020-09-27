@@ -1,3 +1,5 @@
 * [Markdown语法](./markdown.md)
 * [Git指南](./git.md)
 * [Docsify配置](./docsify.md)
+* [Linux调试](./debug.md)
+* [VScode+openSSH连接Ubuntu](./remoteSSH.md)

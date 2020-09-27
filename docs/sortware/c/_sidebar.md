@@ -2,3 +2,4 @@
 * [Socket通信详解](./socket_communication.md)
 * [Static关键字解读](./static.md)
 * [main函数的思考](./main.md)
+* [C语言小扩展](./extension.md)
