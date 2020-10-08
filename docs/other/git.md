@@ -33,8 +33,8 @@ Git是一个开源的分布式版本控制系统，用来进行代码跟踪和�
 ### 3.7 git commit--保存仓库的历史记录
 
 - git commit -m "提交说明"      //添加一行提交信息
-- git commit                   //记述详细提交信息
-- git commit --amend           //修改提交信息，补偿提交
+- git commit                    //记述详细提交信息
+- git commit --amend            //修改提交信息，补偿提交
 
 ### 3.8 git log--查看提交日志
 
@@ -58,8 +58,8 @@ Git是一个开源的分布式版本控制系统，用来进行代码跟踪和�
   
 ### 3.10 git diff--查看更改前后的差别
 
-- git diff                      //查看工作区和暂存区的差别
-- git diff HEAD                 //查看暂存区与版本库的差别
+- git diff                     //查看工作区和暂存区的差别
+- git diff HEAD                //查看暂存区与版本库的差别
 
 *注意：`+`表示新添加的行，`-`表示被删除的行*
 
@@ -76,7 +76,7 @@ Git是一个开源的分布式版本控制系统，用来进行代码跟踪和�
 ### 3.14 git branch--显示分支列表
 
 - git branch -a                //显示分支所有列表和当前所在分支
-- git branch -D
+- git branch -D 分支1          //强制删除分支1
 
 ### 3.15 git checkout--创建、切换分支
 
@@ -84,19 +84,29 @@ Git是一个开源的分布式版本控制系统，用来进行代码跟踪和�
 
 ### 3.16 git reset--回溯历史版本
 
-- git reset -- soft 哈希值(4位以上)
-- git reset -- hard 哈希值(4位以上)
+- git reset --soft 哈希值(4位以上)  //软重置，回退到原先的提交历史，保留对文件的修改
+- git reset --hard 哈希值(4位以上)  //硬重置，回退到原先的提交历史，不保留对文件的修改
 
 ### 3.17 git merge--合并分支
 
-- git merge --no-ff 分支
+- git merge                       //等同于git merge --ff，fast-forward方式合并，不会创建新的提交信息
+- git merge --no-ff 分支          //关闭fast-forward(快进)方式，创建新的提交信息，便于分支回退和管理
+- git merge --squash              //把多次分支的提交历史压缩为一次
 
 ### 3.18 git remote
 
 - git remote -v
 - git remote set-url origin clone路径
 
-## 4. git解疑
+### 3.19 git revert--
+
+- git revert 哈希值(4位以上)      //会在当前历史记录中创建新的提交信息还原之前的提交
+
+### 3.20 git cherry-pick--
+
+- git cherry-pick 哈希值(4位以上) 
+
+## 4. Git解疑
 
 ### 4.1 git gc清理仓库
 

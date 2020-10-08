@@ -95,3 +95,4 @@ int main(void)
 
 ## 4. 扩展之C语言可变参
 
+## 5. 扩展之inline内联函数

@@ -29,6 +29,7 @@ sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
 2.3 配置sshd config文件
 
 ```c
+sudo vim /etc/ssh/sshd_config  
 PermitRootLogin yes            //允许被登录
 PasswordAuthentication yes     //密码登录
 ```
@@ -41,6 +42,22 @@ sudo systemctl enable ssh        //自动启动
 ```
 
 2.5 查看服务器IP地址:ifconfig
+
+注意：有时当输入ifconfig后只出现127.0.0.1本机地址，没有正常的IP地址，如下：
+
+```c
+porter@ubuntu:~$ ifconfig
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:7156 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:7156 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:533469 (533.4 KB)  TX bytes:533469 (533.4 KB)
+```
+
+这种情况下表明ubuntu的虚拟网卡没有正常连接，需要手动重新启动连接。
 
 ## 3. VScode配置
 
