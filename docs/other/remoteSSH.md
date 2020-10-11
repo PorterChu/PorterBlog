@@ -72,3 +72,10 @@ lo        Link encap:Local Loopback
 - 搜索Remote-SSH:Open Configuration File
 - Add New SSH Host
 - 登录密码即可
+
+## 4. VScode快捷键使用技巧
+
+### 4.1 多行段落左移或右移
+
+- 左移：选中内容后按`tab`实现自动右移
+- 右移：选中内容后按`shift+tab`实现自动左移

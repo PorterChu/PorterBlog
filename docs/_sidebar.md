@@ -11,4 +11,4 @@
   * [Git指南](./other/git.md)
   * [Docsify配置](./other/docsify.md)
   * [Linux调试](./other/debug.md)
-  * [VScode+openSSH连接Ubuntu](./other/remoteSSH.md)
+  * [VScode远程Ubuntu调试](./other/remoteSSH.md)
