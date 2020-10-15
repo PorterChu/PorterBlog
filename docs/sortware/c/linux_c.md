@@ -707,3 +707,68 @@ int main ()
     return 0;
 }
 ```
+## 9. popen函数和pclose函数
+
+### 9.1 介绍
+
+可以通过popen函数创建一个管道来进行进程间(父进程与子进程)的通信，popen函数会在函数内部调用fork()函数创建一个新进程，此时调用popen函数的进程为父进程，由fork函数创建的进程为子进程，然后在子进程中调用`/bin/sh -c`启动shell执行参数command的指令.
+
+- popen函数定义：
+
+```c
+#include <stdio.h>
+FILE *popen(const char *command, const char *type);
+```
+
+- 参数介绍：
+
+```c
+command：由popen函数内部调用fork函数创建子进程，并在子进程中启动shell执行command的指令
+type：由popen创建的管道用于父进程与子进程之间的通信，'r'代表父进程从管道中读取，w'代表父进程向管道中写入
+```
+
+- 返回值：
+
+创建管道成功，则返回一个文件指针(管道)，通过此文件指针可以从子进程的标准输出中读取，也可以向子进程的标准输入中写入；若创建失败则返回NULL，错误信息写入到errno中。
+
+- pclose函数定义：
+
+```c
+int pclose(FILE * stream);  //pclose函数用来关闭由popen函数创建的管道，参数stream即为函数popen执行成功返回的文件指针，成功关闭会结束shell，关闭失败会返回-1，错误写入到errno中。pclose函数与popen函数是结合一起使用的，类似与fopen函数和fclose函数。
+```
+
+### 9.2 示例
+
+```c
+//代码
+#include<stdlib.h>
+#include<stdio.h>
+#include<unistd.h>
+#include<string.h>
+#define MAXSIZE 512
+int main()
+{
+    FILE* fp = NULL;
+    char cmd[MAXSIZE];
+    sprintf(cmd, "ls ./ | wc -l");
+    printf("cmd is %s\n", cmd);
+    if ((fp = popen(cmd, "r")) != NULL)
+    {
+        //将从子进程shell中执行的结果存放到cmd数组中
+        fgets(cmd, sizeof(cmd), fp);
+        if('\n' == cmd[strlen(cmd)-1])
+        {
+            //去除尾字符'\n'
+            cmd[strlen(cmd)-1] = '\0';
+        }
+        pclose(fp);
+    }
+    printf("cmd is %s\n", cmd);
+    return 0;
+}
+
+//执行结果
+cmd is ls ./ | wc -l
+cmd is 17
+```
+
