@@ -95,14 +95,14 @@ int main(void)
 
 ### 3.1 DEBUG宏意义
 
-DEBUG宏在软件DEBUG版本和RELEASE版本上应用较多，通常DEBUG版本使用DEBUG宏来打印出错log定位问题，而在RELEASE版本发布中则不需要此类log，因为程序在进行log打印的时候会占用很多系统资源，拖慢操作系统运行效率，因此DEBUG版本的代码效率是远远低于RELEASE版本的。
+DEBUG宏在软件DEBUG版本和RELEASE版本上应用较多，通常DEBUG版本打印出错log定位问题，而在RELEASE版本发布中则不需要此类log，因为程序在进行log打印的时候会占用很多系统资源，拖慢操作系统运行效率，因此DEBUG版本的代码效率是远远低于RELEASE版本的。
 
 ### 3.2 DEBUG宏实现原理
 
 DEBUG宏简单的实现原理如下：
 
 ```c
-#define DEBUG
+#define DEBUG   //确认是否需要注释
 #ifdef DEBUG
 #define dbg() printf()
 #else   
@@ -162,8 +162,53 @@ do{ /
 
 上方示例中实现方式与原理介绍中的一样，对于编译DEBUG版本，需要添加`#define DEBUG`，代码中会将DBG()、ERROR()、WARNING()、INFO()、SHOW_TIME()替换成对应的格式打印出来；而编译发布RELEASE版本时，则注释掉`#define DEBUG`，则这些打印语句会被替换成空，所有的log都不会被打印。
 
-## 4. 扩展之C语言可变参
+## 4. 扩展之可变参函数
+
+### 4.1 可变参函数说明
+
+C语言中很多函数在定义时使用了可变参，可变参顾名思义表示函数的参数个数是不定的，程序员在使用这些函数时就可以根据需要来进行传参设定。通过man手册来看下printf函数的定义，如下：
+
+```c
+int printf(const char *format, ...);
+```
+
+参数format表示格式字符串的指令，是一个确定的参数，因为函数至少需要一个固定的参数；`...`表示可选参数，调用时传递给`...`的参数可有可无，根据实际情况而定。
+
+### 4.2 实现可变参函数
+
+要实现一个可变参函数需要使用到头文件`stdarg.h`中定义的这些函数：
+
+- 可变参数函数定义
+
+```c
+typedef char * va_list;                  //在strarg.h头文件中定义，表示指向个数可变的参数列表指针的一种类型
+void va_start(va_list ap, last);         //va_start()使参数列表指针ap指向参数列表中的第一个可选参数，last是可变参数`...`之前的最后一个固定参数
+type va_arg(va_list ap, type);           //返回参数列表中指针ap所指的参数，返回类型为type，并使指针ap指向参数列表中下一个参数
+void va_copy(va_list dest, va_list src); //dest，src的类型都是va_list，va_copy()用于复制参数列表指针，将dest初始化为src
+void va_end(va_list ap);                 //清空参数列表，并置参数指针ap无效
+```
+
+注意：指针ap被置无效后，可以通过调用va_start()、va_copy()恢复ap，每次调用va_start()或者va_copy()后，必须得有相应的va_end()与之匹配；参数指针可以在参数列表中随意的来回移动，但必须在va_start() ~ va_end()之内。
+
+- 可变参数宏定义
+
+```c
+#define _INTSIZEOF(n) ((sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1))    //求变量占用内存空间大小，便于代码移植
+#define va_start(ap,v) (ap = (va_list)&v + _INTSIZEOF(v))                     //第一个可选参数地址
+#define va_arg(ap,t) (*(t *)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t)))          //下一个参数地址
+#define va_end(ap) (ap = (va_list)0)                                          //将指针置为无效
+```
+
+- _INTSIZEOF宏介绍
+
+_INTSIZEOF宏是为了解决内存对齐的问题，内存对齐跟硬件平台有很大的关系，在32或者64位X86平台上，sizeof(int)的大小是4，也就是2的2次方，用二进制来表示的话为100。
+
+```c
+#define _INTSIZEOF(n) ((sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1))
+```
 
 
 
-## 5. 扩展之inline内联函数
+## 5. 扩展之预定义宏
+
+## 6. 扩展之inline函数
