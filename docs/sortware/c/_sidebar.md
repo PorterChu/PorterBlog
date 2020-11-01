@@ -4,3 +4,4 @@
 * [main函数的思考](./main.md)
 * [C语言小扩展](./extension.md)
 * [C编程小思路](./method.md)
+* [C语言小题目](./interview_question.md)

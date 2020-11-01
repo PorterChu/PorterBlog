@@ -4,11 +4,11 @@ Interlaken有多种应用，可以在不同媒介中传输：
 
 - 帧/以太网MAC到NPU或L2/L3交换芯片
 
-![](../10281212/images/interlaken应用1.png)
+![](./image/interlaken_application.svg)
 
 - 线卡上交换侧接口和交换板之间
 
-![](../10281212/images/interlaken应用2.png)
+![](./image/interlaken_application_2.svg)
 
 ## 2. 特性
 

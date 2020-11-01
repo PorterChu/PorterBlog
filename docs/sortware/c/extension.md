@@ -93,6 +93,77 @@ int main(void)
 
 ## 3. 扩展之DEBUG宏
 
+### 3.1 DEBUG宏意义
+
+DEBUG宏在软件DEBUG版本和RELEASE版本上应用较多，通常DEBUG版本使用DEBUG宏来打印出错log定位问题，而在RELEASE版本发布中则不需要此类log，因为程序在进行log打印的时候会占用很多系统资源，拖慢操作系统运行效率，因此DEBUG版本的代码效率是远远低于RELEASE版本的。
+
+### 3.2 DEBUG宏实现原理
+
+DEBUG宏简单的实现原理如下：
+
+```c
+#define DEBUG
+#ifdef DEBUG
+#define dbg() printf()
+#else   
+#define dbg() 
+#endif
+```
+
+DEBUG版本和RELEASE版本控制区分是通过`#define DEBUG`这个宏定义来区分的，这个宏定义是程序员自己定义的，当程序编译DEBUG版本进行代码调试时，需要提前加上此宏定义，而后代码中的所有dbg()语句都会替换成printf()语句，将log信息按照dbg函数中预先设置好的格式打印出来；而当编译RELEASE版本时，则需要注释掉此宏定义，代码中的dgb()语句会全部替换成空，所有的log信息均不打印。
+
+### 3.3 DEBUG宏实际应用
+
+```c
+#define DEBUG
+#ifdef DEBUG    
+#define DBG(...) /    
+do{ /    
+    fprintf(stdout, "[DEBUG  ]%s %s(Line %d): ",__FILE__,__FUNCTION__,__LINE__); /    
+    fprintf(stdout, __VA_ARGS__); /    
+}while(0)    
+#else    
+#define DBG(...)    
+#endif 
+
+#define ERROR(...) /    
+do{ /    
+    fprintf(stderr, "[ERROR  ]%s %s(Line %d): ",__FILE__,__FUNCTION__,__LINE__); /    
+    fprintf(stderr, __VA_ARGS__); /    
+}while(0)    
+
+#define WARNING(...) /    
+do{ /    
+    fprintf(stdout, "[WARNING]%s %s(Line %d): ",__FILE__,__FUNCTION__,__LINE__); /    
+    fprintf(stdout, __VA_ARGS__); /    
+}while(0)    
+
+#define INFO(...) /    
+do{ /    
+    fprintf(stdout, "[INFO  ]%s %s(Line %d): ",__FILE__,__FUNCTION__,__LINE__); /    
+    fprintf(stdout, __VA_ARGS__); /    
+}while(0)    
+
+#define SHOW_TIME(...) /    
+do{ /    
+    extern unsigned long long gLatestTime;/    
+    timeval tp;/    
+    gettimeofday(&tp, NULL);/    
+    unsigned long long now = tp.tv_sec*1000000+tp.tv_usec; /    
+    if(gLatestTime != 0) /    
+    { /    
+        fprintf(stdout, ">>>>>>>>>Used Time: %s[%d], %s: %ld.%ld, %llu ms ", __FILE__, __LINE__, __func__, tp.tv_sec, tp.tv_usec, (now-gLatestTime)/1000);/    
+        fprintf(stdout, __VA_ARGS__); /    
+        fprintf(stdout, "/n"); /    
+    } /    
+    gLatestTime = now;/    
+}while(0)    
+```
+
+上方示例中实现方式与原理介绍中的一样，对于编译DEBUG版本，需要添加`#define DEBUG`，代码中会将DBG()、ERROR()、WARNING()、INFO()、SHOW_TIME()替换成对应的格式打印出来；而编译发布RELEASE版本时，则注释掉`#define DEBUG`，则这些打印语句会被替换成空，所有的log都不会被打印。
+
 ## 4. 扩展之C语言可变参
+
+
 
 ## 5. 扩展之inline内联函数
