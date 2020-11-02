@@ -195,19 +195,39 @@ void va_end(va_list ap);                 //清空参数列表，并置参数指�
 ```c
 #define _INTSIZEOF(n) ((sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1))    //求变量占用内存空间大小，便于代码移植
 #define va_start(ap,v) (ap = (va_list)&v + _INTSIZEOF(v))                     //第一个可选参数地址
-#define va_arg(ap,t) (*(t *)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t)))          //下一个参数地址
+#define va_arg(ap,t) (*(t *)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t)))          //返回当前参数，并指向下一个参数地址
 #define va_end(ap) (ap = (va_list)0)                                          //将指针置为无效
 ```
 
-- _INTSIZEOF宏介绍
+以int TestFunc(int n1, int n2, int n3, …)为例子，来看参数传递时的内存堆栈实际情况：
 
-_INTSIZEOF宏是为了解决内存对齐的问题，内存对齐跟硬件平台有很大的关系，在32或者64位X86平台上，sizeof(int)的大小是4，也就是2的2次方，用二进制来表示的话为100。
+![](./image/va可变参.svg)
+
+1. 通过va_start得到第一个可选参数的地址：
 
 ```c
-#define _INTSIZEOF(n) ((sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1))
+&n3 + _INTSIZEOF(n3)    //最后一个固定参数的地址 + 该参数占用内存的大小
 ```
 
+2. va_arg身兼二职：返回当前参数，并使参数指针指向下一个参数：
 
+```c
+#define va_arg(ap,t) (*(t *)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t)))
+/* 指针ap指向下一个参数的地址 */
+1．  ap += _INTSIZEOF(t)
+/* ap减去当前参数的大小得到当前参数的地址，再强制类型转换后返回它的值 */
+2．  return *(t *)( ap - _INTSIZEOF(t))
+```
+
+注意：函数的固定参数部分，可以直接从函数定义时的参数名获得；对于可选参数部分，先将指针指向第一个可选参数，然后依次后移指针，根据与结束标志的比较来判断是否已经获得全部参数。因此，va函数中结束标志必须事先约定好，否则指针会指向无效的内存地址，导致出错。
+
+- _INTSIZEOF宏介绍
+
+```c
+#define _INTSIZEOF(n) ((sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1)) 
+```
+
+对于指针在可变参之间的偏移量，也就是上一个可变参和下一个可变参在内存空间的间隔大小是不确定的，这里涉及到内存对齐的问题，而_INTSIZEOF宏是就是为了此问题，内存对齐跟硬件平台有很大的关系，_INTSIZEOF(n)最终大小肯定是sizeof(int)的整数倍。
 
 ## 5. 扩展之预定义宏
 
