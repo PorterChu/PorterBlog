@@ -229,6 +229,40 @@ void va_end(va_list ap);                 //清空参数列表，并置参数指�
 
 对于指针在可变参之间的偏移量，也就是上一个可变参和下一个可变参在内存空间的间隔大小是不确定的，这里涉及到内存对齐的问题，而_INTSIZEOF宏是就是为了此问题，内存对齐跟硬件平台有很大的关系，_INTSIZEOF(n)最终大小肯定是sizeof(int)的整数倍。
 
+- VA可变参示例：
+
+```c
+#include <stdio.h>
+#include <string.h>  
+#include <stdarg.h>  
+
+/* ANSI标准形式的声明方式，括号内的省略号表示可选参数 */  
+void demo(char *msg, ...)  
+{  
+    va_list argp;                          /* 定义保存函数参数的结构 */  
+    int argno = 0;                         /* 纪录参数个数 */  
+    char *para;                            /* 存放取出的字符串参数 */                                      
+    va_start(argp, msg);                   /* argp指向传入的第一个可选参数，msg是最后一个确定的参数 */  
+ 
+    while(1) 
+    {  
+        para = va_arg(argp, char *);       /* 取出当前的参数，类型为char *. */  
+        if( strcmp(para, "\0") == 0 )      /* 采用空串指示参数输入结束 */  
+            break;  
+        printf("Parameter #%d is: %s\n", argno, para);  
+        argno++;  
+    }  
+	
+    va_end(argp);                          /* 将argp置为NULL */  
+}
+
+int main(void)  
+{  
+    demo("DEMO", "This", "is", "a", "demo!" , "\0");  
+	return 0;
+}    
+```
+
 ## 5. 扩展之预定义宏
 
 ## 6. 扩展之inline函数
