@@ -86,3 +86,68 @@ porter@ubuntu:~/windows_share$ bash test.sh
 
 ## shell使用
 
+### 变量定义与初始化
+
+string="hello"  //注意：'='后面不能有空格，语句结尾不能添加分号
+
+### 变量赋值
+
+### 变量引用
+
+变量引用必须使用'$'符号，类似与C语言中的'@'解引用
+注意：$引用的变量未定义的话，执行输出的值就为空
+
+引用$
+单引号''
+双引号""
+反引号``
+
+1. if判断语句
+
+```shell
+if []; then
+        xxx
+else
+        xxx
+fi
+```
+
+- if判断文件是否存在(-f)
+- if判断目录是否存在(-d)
+- if判断字符串是否相等("str1" = "str2")
+- if判断字符串是否为空(-z)
+- if判断数字是否相等(-eq)、不等于(-ne)、大于(-qt)、小于(-lt)、大于等于(-ge)、小于等于(-le)
+
+2. while do循环语句
+
+```shell
+while []
+do
+        xxx
+done
+```
+
+shell编程实现i++的几种方法：
+- i=$(($i + 1))
+- i=$[$i+1]
+- let i++
+- let i+=1
+- i=`expr $i + 1`
+
+3. case语句
+
+```shell
+case xxx in
+1) xxx ;;
+2) xxx ;;
+esac 
+```
+
+注意：shell编程中case语句执行完是默认执行break的，如果与while do循环语句结合的case语句中有break，那这个break是用来跳出while do循环的。
+
+$#:传参个数 $0：执行指令 $1：第一个有效传参
+
+shift可以修改传参指令，作用类同于左移运算符
+
+echo xxx > a.c：创建新文件a.c并输入内容xxx
+echo xxx >> a.c 在文件a.c末尾中追加内容xxx
