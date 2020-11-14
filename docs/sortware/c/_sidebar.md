@@ -2,6 +2,6 @@
 * [Socket通信详解](./socket_communication.md)
 * [Static关键字解读](./static.md)
 * [main函数的思考](./main.md)
-* [C语言小扩展](./extension.md)
-* [C编程小思路](./method.md)
+* [C语言小扩展](./knowledge.md)
 * [C语言小题目](./interview_question.md)
+* [Linux调试记录](./linux_debug.md)

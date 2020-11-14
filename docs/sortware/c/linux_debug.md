@@ -1,4 +1,4 @@
-1. 关闭进程、删除lock文件
+## 1. 关闭进程、删除lock文件
 
 当我们使用`sudo apt install openssh-server`命令去安装openssh-server时出现如下错误：
 
@@ -24,7 +24,7 @@ sudo rm /var/lib/dpkg/lock-frontend /var/lib/dpkg/lock
 
 最后再一次运行`sudo apt install openssh-server`进行安装更新。
 
-2. 'main'未引用错误
+## 2. 'main'未引用错误
 
 当一个.c文件使用`gcc`命令进行编译时，出现下方的错误：
 ```c
