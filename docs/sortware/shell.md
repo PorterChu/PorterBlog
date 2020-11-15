@@ -84,7 +84,7 @@ porter@ubuntu:~/windows_share$ bash test.sh
 
 从上面注释中看到，在当前进程中执行脚本，无论执行多少次PID都不会变，而在新进程中执行脚本，每次输出的PID都是不同的。同时，在当前进程中使用`. filename`最方便，在新进程中使用`bash filename`最方便，而且不需要更改文件的执行权限。
 
-## shell使用
+## shell编程
 
 ### 变量定义与初始化
 
@@ -151,3 +151,11 @@ shift可以修改传参指令，作用类同于左移运算符
 
 echo xxx > a.c：创建新文件a.c并输入内容xxx
 echo xxx >> a.c 在文件a.c末尾中追加内容xxx
+
+## shell使用
+
+1. 查看文件信息
+
+- ls -l xxx   //查看文件xxx详细信息
+- du -h xxx   //使用人眼模式查看文件xxx大小
+- file xxx    //查看文件xxx类型
