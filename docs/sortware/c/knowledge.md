@@ -345,3 +345,52 @@ int main(void)
   - 受编译器限制，部分编译器无法识别，兼容性差
 
 ## 8. 扩展之#pragma用法
+
+预处理指令#pragma功能很多，相对也较为复杂，它的作用是设定编译器的状态或指示编译器完成一些特定的动作，也就是说#pragma指令的功能依赖具体的编译器，每个编译器能识别的#pragma指令不同，如果代码中使用较多的#pragma指令会令代码可移植性大大降低。
+
+- #pragma message
+
+此指令可以让编译器输出相应的信息，尤其当代码中设置了较多的宏后，可以通过输出信息来进行检查：
+
+```c
+#ifdef _X86  
+#pragma message("_X86 macro activated!")  
+#endif
+```
+
+- #pragma code_seg([[{push|pop},][identifier,]]["segment-name"[,"segment-class"]])
+
+
+- #pragma data_seg
+
+
+- #pragma once
+
+此指令通常放在头文件中，作用域为整个头文件，功能是保证此头文件只被编译一次，功能类似#ifndef，详细可参考[7.扩展之避免二义性](#7-扩展之避免二义性)。
+
+- #pragma hdrstop
+
+
+- #pragma startup
+
+
+- #pragma package(smart_init)
+
+
+- #pragma resource "*.dfm"
+
+
+- #pragma warning
+
+
+- #pragma comment(comment-type,["commentstring"]) 
+
+
+- #pragma pack([[{push|pop},][identifier,]][n])
+
+
+- #pragma region
+- #pragma endregions
+
+
+- #pragma disable
