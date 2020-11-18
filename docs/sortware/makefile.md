@@ -56,3 +56,5 @@ vpath关键字：指定文件搜索目录
 2. vpath %.h             //清除符合%.h文件的../include搜索目录
 3. vpath                 //清除所有设置好的文件搜索目录
 
+
+make —help
