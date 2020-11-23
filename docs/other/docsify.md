@@ -68,7 +68,7 @@ docsify init                                    //初始化docsify
 
 初始化成功后当前文件目录内便会出现index.html、README.md和.nojekyll三个文件，最后我们来借助这几个文件执行如下命令触发本地网页站点，并可以点击链接查看网页啦：
 
-```
+```shell
 docsify serve ./                                //配置本地网站站点
 ```
 
