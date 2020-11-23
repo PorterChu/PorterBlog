@@ -159,3 +159,5 @@ echo xxx >> a.c 在文件a.c末尾中追加内容xxx
 - ls -l xxx   //查看文件xxx详细信息
 - du -h xxx   //使用人眼模式查看文件xxx大小
 - file xxx    //查看文件xxx类型
+
+- uname -m    //查看CPU架构平台
