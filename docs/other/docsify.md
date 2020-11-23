@@ -68,7 +68,14 @@ docsify init                                    //初始化docsify
 
 初始化成功后当前文件目录内便会出现index.html、README.md和.nojekyll三个文件，最后我们来借助这几个文件执行如下命令触发本地网页站点，并可以点击链接查看网页啦：
 
-```shell
+```
 docsify serve ./                                //配置本地网站站点
+```
+
+如果git库原先有已经写好的文档，则不需要初始化本地仓库，直接进入到对应的目录进行配置查看就行啦，如下示例：
+
+```shell
+cd docs
+docsify serve docs
 ```
 
