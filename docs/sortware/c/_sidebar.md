@@ -3,5 +3,5 @@
 * [Static关键字解读](./static.md)
 * [main函数的思考](./main.md)
 * [C语言小扩展](./knowledge.md)
-* [C语言小题目](./interview_question.md)
+* [C语言小测试](./interview_question.md)
 * [Linux调试记录](./linux_debug.md)
