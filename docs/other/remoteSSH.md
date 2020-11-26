@@ -16,19 +16,19 @@
 
 2.1 安装openSSH-server
 
-```c
+```shell
 sudo apt-get install openssh-server
 ```
 
 2.2 备份原先的配置文件
 
-```c
+```shell
 sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
 ```
 
 2.3 配置sshd config文件
 
-```c
+```shell
 sudo vim /etc/ssh/sshd_config  
 PermitRootLogin yes            //允许被登录
 PasswordAuthentication yes     //密码登录
@@ -36,7 +36,7 @@ PasswordAuthentication yes     //密码登录
 
 2.4 重新启动sshd服务
 
-```c
+```shell
 sudo service ssh --full-restart  //重启sshd服务
 sudo systemctl enable ssh        //自动启动
 ```
@@ -45,7 +45,7 @@ sudo systemctl enable ssh        //自动启动
 
 注意：有时当输入ifconfig后只出现127.0.0.1本机地址，没有正常的IP地址，如下：
 
-```c
+```shell
 porter@ubuntu:~$ ifconfig
 lo        Link encap:Local Loopback  
           inet addr:127.0.0.1  Mask:255.0.0.0
@@ -73,7 +73,11 @@ lo        Link encap:Local Loopback
 - Add New SSH Host
 - 登录密码即可
 
-## 4. VScode快捷键使用技巧
+## 4. 免密登录
+
+复制id_rsa.pub全部内容，添加到到服务器的`~/.ssh/authorized_keys`文件中即可。
+
+## 5. VScode快捷键使用技巧
 
 4.1 多行段落左移或右移
 - 左移：选中内容后按`tab`实现自动右移

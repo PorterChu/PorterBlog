@@ -7,6 +7,7 @@ Git是一个开源的分布式版本控制系统，用来进行代码跟踪和�
 - git config --global user.name "姓名"
 - git config --global user.email "邮箱"
 - git config --global color.ui auto
+- git config --list                       //查看配置
 
 ## 3. Git使用
 
@@ -95,7 +96,7 @@ Git是一个开源的分布式版本控制系统，用来进行代码跟踪和�
 
 ### 3.18 git remote
 
-- git remote -v
+- git remote -v                   //查看远端地址
 - git remote set-url origin clone路径
 
 ### 3.19 git revert--
