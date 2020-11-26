@@ -112,3 +112,18 @@ Git是一个开源的分布式版本控制系统，用来进行代码跟踪和�
 ### 4.1 git gc清理仓库
 
 git提交代码到远端仓库的时候，出现设备空间不足，此时需要清理仓库，使用`git gc`即可，然后再次提交代码就行了。
+
+### 4.2 git pull\push报错
+
+当`git pull`或`git push`时出现错误，如下：
+
+```bash
+ERROR: Repository not found.
+fatal: Could not read from remote repository.
+Please make sure you have the correct access right and the repository exists.
+```
+
+此问题通过git bash分步骤来排查
+- 第一步：输入`git remote -v`来检查远端仓库是否是想要push的仓库
+- 第二步：输入`ssh -T git@github.com`来检查是否连接Github成功
+- 第三步：进入根目录`cd ~/`来确认公钥和私钥存放位置是否被修改，通常SSH公钥和私钥路径会被切换到*/SPB_Data下面，此时copy一份公钥和私钥到对应路径即可
