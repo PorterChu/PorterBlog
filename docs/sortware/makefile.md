@@ -41,10 +41,10 @@ endif
 ### 赋值操作符
 
 ```makefile
-var?=$(test)       //当变量var未赋值(未定义)时则将$(test)赋值给var，若变量var已赋值则忽略$(test)
-var+=$(test)       //将$(test)的值添加在变量var结尾，中间用一个空格隔开，作用类似C语言中strcat
-var:=$(test)       //将表达式之前的$(test)的值赋给变量var，即使表达式之后$(test)值变化了也无法赋值，也就是说操作符`:=`只能向上搜索$(test)的值
-var=$(test)        //普通赋值，将最终的$(test)的值赋给变量var
+var?=$(test)       # 当变量var未赋值(未定义)时则将$(test)赋值给var，若变量var已赋值则忽略$(test)
+var+=$(test)       # 将$(test)的值添加在变量var结尾，中间用一个空格隔开，作用类似C语言中strcat
+var:=$(test)       # 将表达式之前的$(test)的值赋给变量var，即使表达式之后$(test)值变化了也无法赋值，也就是说操作符`:=`只能向上搜索$(test)的值
+var=$(test)        # 普通赋值，将最终的$(test)的值赋给变量var
 ```
 
 ### 函数使用
@@ -52,36 +52,36 @@ var=$(test)        //普通赋值，将最终的$(test)的值赋给变量var
 1. findstring(查找字符串函数)
 
 ```Makefile
-#示例：在字串<in>中查找<find>字符串，找到返回<find>，找不到则返回空字符串
+# 示例：在字串<in>中查找<find>字符串，找到返回<find>，找不到则返回空字符串
 $(findstring <find>,<in>)
-#应用：在变量$(MK_ARCH)中查找字符串"i386"、"i486"、"i586"、"i686"
+# 应用：在变量$(MK_ARCH)中查找字符串"i386"、"i486"、"i586"、"i686"
 $(findstring $(MK_ARCH), "i386" "i486" "i586" "i686")
 ```
 
 2. filter(过滤函数)
 
 ```Makefile
-#示例：以<pattern>模式过滤<text>字符串中的单词，保留符合模式<pattern>的单词，可以有多个模式，返回符合模式<pattern>的字串
+# 示例：以<pattern>模式过滤<text>字符串中的单词，保留符合模式<pattern>的单词，可以有多个模式，返回符合模式<pattern>的字串
 $(filter <pattern...>,<text>)
-#应用：在变量$(MAKEFLAGS)中过滤符合s%、-s%的单词
+# 应用：在变量$(MAKEFLAGS)中过滤符合s%、-s%的单词
 $(filter s% -s%,$(MAKEFLAGS))
 ```
 
 3. firstword(首单词函数)
 
 ```Makefile
-#示例：取字符串<text>中的第一个单词，返回字符串<text>的第一个单词
+# 示例：取字符串<text>中的第一个单词，返回字符串<text>的第一个单词
 $(firstword <text>)
-#应用：取变量$(MAKEFLAGS)中第一个单词，并与X进行组合
+# 应用：取变量$(MAKEFLAGS)中第一个单词，并与X进行组合
 $(firstword x$(MAKEFLAGS))
 ```
 
 4. origin(查询变量来源函数)
 
 ```Makefile
-#示例：<variable>是变量的名字，不是引用，所以不要添加$字符，通过函数返回值来确定此变量的来源
+# 示例：<variable>是变量的名字，不是引用，所以不要添加$字符，通过函数返回值来确定此变量的来源
 $(origin <variable>)
-#返回值：
+# 返回值：
 undefined：表示此<variable>变量未定义
 default：表示此<variable>变量是一个默认的定义，如‘CC’这个变量
 environment：表示此<variable>变量是一个环境变量，并且执行Makefile时没有添加‘-e’参数(即未让环境变量覆盖Makefile变量)
@@ -89,16 +89,16 @@ file：表示此<variable>变量在Makefile中被定义
 command line：表示此<variable>变量是被命令行定义的
 override：表示此<variable>变量是被override指示符重新定义的
 automatic：表示此<variable>变量是一个命令运行中的自动化变量，如$@、$<、$^等
-#应用：查询变量O的来源
+# 应用：查询变量O的来源
 $(origin O)
 ```
 
 5. shell(执行shell命令函数)
 
 ```Makefile
-#示例：打开查看foo文件内容，与`cat foo`功能一致
+# 示例：打开查看foo文件内容，与`cat foo`功能一致
 $(shell cat foo)
-#应用：创建一个以变量$(KBUILD_OUTPUT)的文件夹并进入到文件夹内打印当前目录路径
+# 应用：创建一个以变量$(KBUILD_OUTPUT)的文件夹并进入到文件夹内打印当前目录路径
 $(shell mkdir -p $(KBUILD_OUTPUT) && cd $(KBUILD_OUTPUT) && /bin/pwd)
 ```
 

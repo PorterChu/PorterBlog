@@ -9,5 +9,6 @@
 * [杂记](./other/README.md)
   * [Markdown语法](./other/markdown.md)
   * [Git指南](./other/git.md)
+  * [Repo指南](./other/repo.md)
   * [Docsify配置](./other/docsify.md)
   * [VScode远程Ubuntu调试](./other/remoteSSH.md)

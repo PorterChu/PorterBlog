@@ -33,12 +33,12 @@ chmod +x ./test.sh
 - o：other，表示其他
 - a：all，表示所有
 
-*当然这边授予文件执行权限除了使用`chmod +x`外，也可以使用`chmod 777`。*
+*当然这边授予文件全部执行权限除了使用`chmod +x`外，也可以使用`chmod 777`，chmod后面三位数字分别代表user、group、others的权限，而文件可读(r)、可写(w)、可执行(x)的权限分别用数字4、2、1表示，数字7是权限4、2、1的和，777即代表user、group、others均具有可读(r)、可写(w)、可执行(x)的权限，chmod 777表示释放了全部权限。*
 
 #### 1.2 作为解释器参数
 
 ```shell
-/bin/sh test.sh   //这种方式执行脚本则不需要在脚本中指定解释器信息（下文再阐述）
+/bin/sh test.sh   # 这种方式执行脚本则不需要在脚本中指定解释器信息(下文再阐述)
 ```
 
 甚至更为简单的用bash来进行执行：
@@ -68,18 +68,18 @@ source test.sh
 上面提到用进程ID(PID)可以来确定是新进程还是当前进程，用`echo $$`命令可输出PID。
 
 ```shell
-porter@ubuntu:~/windows_share$ touch test.sh   //创建脚本文件
-porter@ubuntu:~/windows_share$ vim test.sh     //写入`echo $$`用来输出PID
-porter@ubuntu:~/windows_share$ . test.sh       //在当前进程中执行脚本
-18100                                          //当前进程ID
+porter@ubuntu:~/windows_share$ touch test.sh   # 创建脚本文件
+porter@ubuntu:~/windows_share$ vim test.sh     # 写入`echo $$`用来输出PID
+porter@ubuntu:~/windows_share$ . test.sh       # 在当前进程中执行脚本
+18100                                          # 当前进程ID
 porter@ubuntu:~/windows_share$ . test.sh
-18100                                          //当前进程ID
-porter@ubuntu:~/windows_share$ bash test.sh    //在新进程中执行脚本
-4802                                           //新进程ID
+18100                                          # 当前进程ID
+porter@ubuntu:~/windows_share$ bash test.sh    # 在新进程中执行脚本
+4802                                           # 新进程ID
 porter@ubuntu:~/windows_share$ bash test.sh
-5035                                           //新进程ID
+5035                                           # 新进程ID
 porter@ubuntu:~/windows_share$ bash test.sh
-5038                                           //新进程ID
+5038                                           # 新进程ID
 ```
 
 从上面注释中看到，在当前进程中执行脚本，无论执行多少次PID都不会变，而在新进程中执行脚本，每次输出的PID都是不同的。同时，在当前进程中使用`. filename`最方便，在新进程中使用`bash filename`最方便，而且不需要更改文件的执行权限。
@@ -88,7 +88,9 @@ porter@ubuntu:~/windows_share$ bash test.sh
 
 ### 变量定义与初始化
 
-string="hello"  //注意：'='后面不能有空格，语句结尾不能添加分号
+```shell
+string="hello"  # 注意：'='后面不能有空格，语句结尾不能添加分号
+```
 
 ### 变量赋值
 
@@ -154,10 +156,93 @@ echo xxx >> a.c 在文件a.c末尾中追加内容xxx
 
 ## shell使用
 
-1. 查看文件信息
+1. 通配符
 
-- ls -l xxx   //查看文件xxx详细信息
-- du -h xxx   //使用人眼模式查看文件xxx大小
-- file xxx    //查看文件xxx类型
+```shell
+- ?              # 通配一个字符
+- *              # 通配任意字符
+- [ai]           # 通配a和i字符
+- [a - i]        # 通配a到i之间多字符
+- [!a]           # 通配非a字符
+```
 
-- uname -m    //查看CPU架构平台
+2. 查看信息
+
+```shell
+- ls              # 查看文件
+  - ls -l         # 查看文件详细信息，不包括隐藏文件
+  - ls -a         # 查看所有文件，包括隐藏文件
+- df              # 查看文件系统硬盘使用情况
+  - df -a         # 显示所有文件系统，包括/proc、/sysfs等系统
+  - df -h         # 使用习惯单位显示
+- du              # 统计目录或文件所占磁盘空间大小
+  - du -h xxxx    # 使用习惯单位查看文件xxxx的占用大小
+- file xxx        # 查看文件xxx类型
+- uname -m        # 查看CPU架构平台
+- uname -r        # 查看内核版本
+- history         # 查看历史命令
+- top             # 查看CPU负载信息
+  - q             # 退出top
+  - d             # 修改轮询间隔
+  - f             # 选择对输出进行排序的字段
+- tree -L 4 -d    # 查看文件树，-L表示显示目录深度4，-d表示只显示目录
+- cat xxx         # 查看全部文本内容
+  - cat -n xxx    # 添加行号查看文本内容
+  - cat -b xxx    # 仅添加文本行号查看文本内容
+- more xxx        # 以页面形式查看文本内容
+- less xxx
+- tail xxx        # 默认仅显示文本最后10行
+- head xxx        # 默认仅显示文本前10行
+- ps              # 查看进程信息
+  - ps -ef        # 查看所有进程并输出完整格式
+  - ps -l
+```
+
+3. 压缩和解压
+
+```shell
+- unzip filename.zip           # 解压zip格式文件
+- tar -zxvf filename.tar.gz    # 解压gz格式文件
+- tar -jxvf filename.tar.xz    # 解压xz格式文件
+- tar -zxvf filename.tar.Z     # 解压Z格式文件
+- tar --help                   # 查看tar参数使用规则
+```
+
+4. 建立软链接
+
+```shell
+- ln -s 源文件目录 目标文件目录  # 将源文件目录映射到目标文件目录
+```
+
+5. 查找文件或内容
+
+```shell
+find 路径 -name xxx             # 路径表示想要在哪个目录下找到xxx文件
+```
+
+6. 修改权限
+
+```shell
+chmod 777 *                     # 修改文件权限
+chown porter:porter xxx         # 更改xxx文件属主和属组为porter
+```
+
+7. 终止进程
+
+```shell
+- kill PID                      # 终止PID编号的进程
+  - kill -s PID                 # 强制终止PID编号的进程
+- killall UID                   # 终止UID编号的所有进程
+```
+
+8. 内核模块操作
+
+```shell
+- insmod *.ko                   # 载入内核模块
+- rmmod *.ko                    # 卸载内核模块
+- lsmod *.ko                    # 查看内核模块
+- modprobe
+  - modprobe -l                 # 查看所有模块
+  - modprobe *.ko               # 载入内核模块
+  - modprobe -r *.ko            # 卸载内核模块
+```

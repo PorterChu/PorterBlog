@@ -30,15 +30,15 @@ sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
 
 ```shell
 sudo vim /etc/ssh/sshd_config  
-PermitRootLogin yes            //允许被登录
-PasswordAuthentication yes     //密码登录
+PermitRootLogin yes            # 允许root用户通过ssh登录
+PasswordAuthentication yes     # 密码登录
 ```
 
 2.4 重新启动sshd服务
 
 ```shell
-sudo service ssh --full-restart  //重启sshd服务
-sudo systemctl enable ssh        //自动启动
+sudo service ssh --full-restart  # 重启sshd服务
+sudo systemctl enable ssh        # 自动启动
 ```
 
 2.5 查看服务器IP地址:ifconfig
@@ -77,8 +77,32 @@ lo        Link encap:Local Loopback
 
 复制id_rsa.pub全部内容，添加到到服务器的`~/.ssh/authorized_keys`文件中即可。
 
-## 5. VScode快捷键使用技巧
+## 5. 全局索引设置
 
-4.1 多行段落左移或右移
+5.1 安装VScode插件：C/C++ GNU Global、C++ Intellisense
+
+5.2 下载GNU Global win32版本可执行程序，[下载地址](http://adoxa.altervista.org/global/)，此系列程序用于执行gtags命令配置全局搜索，解压到C盘相应目录，如`C:\global\`
+
+**注意：下载的版本号要与C/C++ GNU Global插件适配，在插件细节描述中会给出，当前要下载6.5以上版本**
+
+5.3 将程序的bin目录添加进系统环境变量PATH中，如`C:\global\bin`
+
+5.4 在VScode中，选择`文件->首选项->设置->用户->扩展->C/C++ GNU Global`，编辑Global Executable和Gtags Executable分别添加如下内容：
+
+```javascript
+"gnuGlobal.globalExecutable": "C:\\global\\bin\\global.exe",
+"gnuGlobal.gtagsExecutable": "C:\\global\\bin\\gtags.exe"
+```
+
+5.5 打开VScode终端，输入gtags命令，可生成三个文件GPATH(定义的数据库)、GRTAGS(引用的数据库)、GTAGS(路径的数据库)
+
+**补充：还有一种指定部分文件进行索引的方法，手动生成gtags.files，输入命令`find <dir1> -name "*.h" -print -o -name "*.c" -print > gtags.files`。**
+
+## 6. VScode快捷键使用技巧
+
+6.1 多行段落左移或右移
 - 左移：选中内容后按`tab`实现自动右移
 - 右移：选中内容后按`shift+tab`实现自动左移
+
+6.2 常用快捷键
+- `ctrl+shift+p`：打开全局命令框

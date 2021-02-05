@@ -43,3 +43,13 @@ gcc –E 文件名      //预处理过程，生成.i文件
 gcc –S 文件名      //编译过程，生成.s文件
 gcc -c 文件名      //汇编过程，生成.o文件
 ```
+
+## 3. VMware与Device/Credential Guard不兼容
+
+打开VMware时会遇到与Device/Credential Guard不兼容导致VMware无法正常启动Ubuntu系统，此时禁用Device/Credential Guard后便可以正常运行VMware Workstation，可能原因是windows系统的Hyper-V不兼容导致，debug步骤如下：
+
+- 第一步：按`win+R`键弹出运行框，输入`gpedit.msc`打开`本地组策略编辑器`，选择`本地计算机策略->计算机配置->管理模块->系统->Device Guard->打开基于虚拟化的安全`，选择`禁用`，然后点击`应用`和`确定`按钮；
+- 第二步：按`win+R`键弹出运行框，输入`services.msc`后打开`服务(本地)->HV主机服务`，选择启动类型为`禁用`，然后点击`应用`和`确定`按钮；
+- 第三步：选择`控制面板->程序与功能->启用或关闭Windows功能`，取消`Hyper-V`的勾选，点击`确定`按钮；
+- 第四步：按`win+X`键以管理员身份运营Windows PowerShell，输入`bcdedit /set hypervisorlaunchtype off`，如果后期要重启开启Hyper，可以同样在PowerShell下输入`bcdedit /set hypervisorlaunchtype auto`;
+- 第五步：重启电脑后，运行VMware Workstation就可正常工作了。
