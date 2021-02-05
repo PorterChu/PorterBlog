@@ -9,7 +9,7 @@ repo工具实际上分为两部分，第一部分是我们需要安装的repo工
 ```shell
 mkdir ~/bin
 PATH=~/bin:$PATH
-curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo # 或者以`curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo > ~/bin/repo`进行替代
+curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo > ~/bin/repo
 chmod a+x ~/bin/repo
 export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo' # 或者在~/bin/repo中手动将repo改为清华镜像
 ```
