@@ -25,6 +25,11 @@ git config --list                                 # 查看全部配置
 
 ### 3.2 git clone--获取远程仓库
 
+```shell
+git clone 仓库               # 克隆远程仓库
+git clone -b 分支 仓库       # 克隆远程仓库指定分支
+```
+
 ### 3.3 git status--查看仓库状态
 
 ### 3.4 git add--向暂存区添加文件

@@ -19,7 +19,7 @@ clean:
 注意：
 - 执行的gcc指令之前必须是1个tab键，不能以4个空格键代替，否则会报错
 - 在gcc指令之前添加`@`后，Makefile就会静默执行，不会输出执行的指令
-- 通常依赖的文件有很多，可以用`\`进行换行输入
+- 通常依赖的文件有很多，可以用换行符`\`进行换行输入
 - .PHONY:clean这句指令可以避免伪目标clean与目标重名
 - rm指令前添加`-`，可以忽略有问题的文件，继续执行后续的清除指令
 
@@ -34,6 +34,25 @@ XECHO = :
 endif
 ```
 
+### 文件引用
+
+使用include关键字在当前Makefile中引用其他文件，作用类似于C语言中的#include，语法如下：
+
+```Makefile
+-include <filename>
+```
+
+注意：
+- include前添加的`-`，表示在引用文件的过程中无需理会错误，继续执行
+- include前可以有空字符，但不能是tab键
+- include会在当前路径下寻找，同时也会在`/usr/local/bin或/usr/include`下寻找，若执行make时指定了`-I或--include-dir`，也会到指定路径下寻找文件
+
+```Makefile
+print: *.c
+lpr -p $?            #  $?列出比目标文件(print)更新的所有依赖文件，并由lpr命令提交给打印机
+touch print
+```
+
 ### make参数
 
 通过linux下执行`make --help`即可查看make参数的使用技巧。
@@ -43,8 +62,23 @@ endif
 ```makefile
 var?=$(test)       # 当变量var未赋值(未定义)时则将$(test)赋值给var，若变量var已赋值则忽略$(test)
 var+=$(test)       # 将$(test)的值添加在变量var结尾，中间用一个空格隔开，作用类似C语言中strcat
-var:=$(test)       # 将表达式之前的$(test)的值赋给变量var，即使表达式之后$(test)值变化了也无法赋值，也就是说操作符`:=`只能向上搜索$(test)的值
+var:=$(test)       # 将表达式之前的$(test)的值赋给变量var，即使表达式之后$(test)值变化了也无法赋值 \
+                     也就是说操作符 `:=` 只能向上搜索$(test)的值
 var=$(test)        # 普通赋值，将最终的$(test)的值赋给变量var
+```
+
+### 关键字
+
+1. wildcard
+
+
+2. VPATH(大写，变量)和vpath(小写，关键字)：指定文件搜索目录
+
+```Makefile
+VPATH = src:../headers   # 在'src'和'../headers'两个目录中查找文件，目录之间用冒号':'分隔
+vpath %.h ../include     # 指定在../include路径下查找所有.h的文件
+vpath %.h                # 清除符合%.h文件的搜索目录
+vpath                    # 清除所有设置好的文件搜索目录
 ```
 
 ### 函数使用
@@ -102,6 +136,8 @@ $(shell cat foo)
 $(shell mkdir -p $(KBUILD_OUTPUT) && cd $(KBUILD_OUTPUT) && /bin/pwd)
 ```
 
+6. subst(截取字符串函数)
+
 
 通配符：*、？、[]、%(规则通配符)
 
@@ -111,7 +147,4 @@ gcc -M main.c执行后可以自动推导并列出编译main.c所需要的头文�
 
 gcc -MM main.c执行后可以自动推导并输出非C标准库以外的头文件
 
-vpath关键字：指定文件搜索目录
-1. vpath %.h ../include  //指定在../include路径下查找所有.h的文件
-2. vpath %.h             //清除符合%.h文件的../include搜索目录
-3. vpath                 //清除所有设置好的文件搜索目录
+
