@@ -10,7 +10,7 @@ Makefile写好配置后，在linux下只需要执行make就可自动进行编译
 
 ```Makefile
 目标：依赖
-    @指令
+    @指令1；指令2；指令3
 .PHONY:clean
 clean:
     -rm 文件
@@ -19,7 +19,8 @@ clean:
 注意：
 - 执行的gcc指令之前必须是1个tab键，不能以4个空格键代替，否则会报错
 - 在gcc指令之前添加`@`后，Makefile就会静默执行，不会输出执行的指令
-- 通常依赖的文件有很多，可以用换行符`\`进行换行输入
+- 如果多条指令需要执行且上条指令结果应用在下条指令时，需要把多条指令写在同一行并用分号分隔
+- 通常单行的文件有很多时，可以用换行符`\`进行换行输入
 - .PHONY:clean这句指令可以避免伪目标clean与目标重名
 - rm指令前添加`-`，可以忽略有问题的文件，继续执行后续的清除指令
 
@@ -55,33 +56,30 @@ touch print
 
 ### make参数
 
-通过linux下执行`make --help`即可查看make参数的使用技巧。
+通过linux下执行`make --help`即可查看make参数的使用技巧：
+
+```Makefile
+make -n\--just-print  # 只显示命令，不会执行命令
+make -s\--slient      # 全面禁止命令的显示
+make -e               # 总控Makefile的变量覆盖下层Makefile中所定义的变量
+make -C               # 指定执行目录
+make -w               # 打印当前目录
+```
 
 ### 赋值操作符
 
 ```makefile
 var?=$(test)       # 当变量var未赋值(未定义)时则将$(test)赋值给var，若变量var已赋值则忽略$(test)
-var+=$(test)       # 将$(test)的值添加在变量var结尾，中间用一个空格隔开，作用类似C语言中strcat
+var+=$(test)       # 字符串追加，将$(test)的值添加在变量var结尾，中间用一个空格隔开，作用类似C语言中strcat
 var:=$(test)       # 将表达式之前的$(test)的值赋给变量var，即使表达式之后$(test)值变化了也无法赋值 \
                      也就是说操作符 `:=` 只能向上搜索$(test)的值
 var=$(test)        # 普通赋值，将最终的$(test)的值赋给变量var
-```
-
-### 关键字
-
-1. wildcard
-
-
-2. VPATH(大写，变量)和vpath(小写，关键字)：指定文件搜索目录
-
-```Makefile
-VPATH = src:../headers   # 在'src'和'../headers'两个目录中查找文件，目录之间用冒号':'分隔
-vpath %.h ../include     # 指定在../include路径下查找所有.h的文件
-vpath %.h                # 清除符合%.h文件的搜索目录
-vpath                    # 清除所有设置好的文件搜索目录
+$(var:a=b)         # 字符串替换，将变量var中以a结尾的字符串a替换成b
 ```
 
 ### 函数使用
+
+- 字符串处理函数
 
 1. findstring(查找字符串函数)
 
@@ -92,7 +90,7 @@ $(findstring <find>,<in>)
 $(findstring $(MK_ARCH), "i386" "i486" "i586" "i686")
 ```
 
-2. filter(过滤函数)
+2. filter(过滤函数)、filter-out(反过滤函数)
 
 ```Makefile
 # 示例：以<pattern>模式过滤<text>字符串中的单词，保留符合模式<pattern>的单词，可以有多个模式，返回符合模式<pattern>的字串
@@ -110,7 +108,96 @@ $(firstword <text>)
 $(firstword x$(MAKEFLAGS))
 ```
 
-4. origin(查询变量来源函数)
+4. wildcard(扩展通配符)
+
+在Makefile规则中，通配符会被自动展开，但在变量的定义和函数引用时，通配符将失效，这种情况下如果需要通配符有效，就需要使用函数'wildcard'。规则是展开已经存在的、使用空格分开、匹配此模式的所有文件列表，如果不存在任何符合此模式的文件，则函数会忽略模式字符返回空。
+
+```Makefile
+objects:=$(wildcard *.c)  # 展开所有的.c文件
+```
+
+5. subst(字符串替换函数)、patsubst(通配符字符串替换函数)
+
+```Makefile
+# 示例：将字符串<text>中的<from>替换成<to>
+$(subst <from>,<to>,<text>)
+# 应用：将字符串variable1中的1更换为2
+$(subst 1,2,variable1)   
+```
+
+6. VPATH(大写，变量)和vpath(小写，关键字)：指定文件搜索目录
+
+```Makefile
+VPATH=src:../headers     # 在'src'和'../headers'两个目录中查找文件，目录之间用冒号':'分隔
+vpath %.h ../include     # 指定在../include路径下查找所有.h的文件
+vpath %.h                # 清除符合%.h文件的搜索目录
+vpath                    # 清除所有设置好的文件搜索目录
+```
+
+7.  strip(去空格函数)
+
+```Makefile
+# 应用：去掉<string>字串中开头和结尾的空字符,并将中间的多个连续空字符(如果有的话)合并为一个空字符
+$(strip <string>)        
+```
+
+8. sort(排序函数)
+
+```Makefile
+# 示例：给字符串<list>中的单词排序(升序)
+$(sort <list>)
+# 应用：字符串排序为bar foo lose
+$(sort foo bar lose)
+```
+
+9. word(取单词函数)
+
+```Makefile
+# 示例：取字符串<text>中第<n>个单词，从1开始
+$(word <n>,<text>)
+# 应用：取出的单词为bar
+$(word 2, foo bar baz)
+```
+
+10. wordlist(取单词串函数)
+
+```Makefile
+# 示例：从字符串<text>中取从<s>开始到<e>的单词串，注意：<s>和<e>是一个数字
+$(wordlist <s>,<e>,<text>)
+# 应用：去除的单词串为bar baz
+$(wordlist 2, 3, foo bar baz) 
+```
+
+11. words(单词个数统计函数)
+
+```Makefile
+# 示例：统计<text>中字符串中的单词个数
+$(words <text>)
+# 应用：统计单词个数为3
+$(words, foo bar baz)             
+```
+
+- 文件名操作函数
+
+1. dir(取目录函数)
+
+```Makefile
+# 示例：从文件名序列<names>中取出目录部分，目录部分是指最后一个反斜杠('/')之前的部分，如果没有反斜杠，那么返回'./'
+$(dir <names...>)
+# 应用：取出的目录为‘src/ ./’
+$(dir src/foo.c hacks)
+```
+
+2. notdir(去除路径函数)
+
+```Makefile
+# 示例:从文件名序列<names>中取出非目录部分。非目录部分是指最后一个反斜杠('/')之后的部分
+$(notdir <names...>)
+# 应用：去除路径执行结果为foo.c hacks
+$(notdir src/foo.c hacks)
+```
+
+- origin(查询变量来源函数)
 
 ```Makefile
 # 示例：<variable>是变量的名字，不是引用，所以不要添加$字符，通过函数返回值来确定此变量的来源
@@ -127,7 +214,7 @@ automatic：表示此<variable>变量是一个命令运行中的自动化变量�
 $(origin O)
 ```
 
-5. shell(执行shell命令函数)
+- shell(执行shell命令函数)
 
 ```Makefile
 # 示例：打开查看foo文件内容，与`cat foo`功能一致
@@ -136,15 +223,20 @@ $(shell cat foo)
 $(shell mkdir -p $(KBUILD_OUTPUT) && cd $(KBUILD_OUTPUT) && /bin/pwd)
 ```
 
-6. subst(截取字符串函数)
+### 书写规则
 
+1. 通配符
 
-通配符：*、？、[]、%(规则通配符)
+*、？、[]、%(规则通配符)
 
-自动变量：$@(目标文件名) 、 $<(目标依赖名)、 $^(依赖的文件集合)、@?
+2. 自动变量
 
-gcc -M main.c执行后可以自动推导并列出编译main.c所需要的头文件
+$@(目标文件名) 、 $<(目标依赖名)、 $^(依赖的文件集合)、@?
 
-gcc -MM main.c执行后可以自动推导并输出非C标准库以外的头文件
+3. 依赖推导
 
+```Makefile
+gcc -M main.c      # 执行后可以自动推导并列出编译main.c所需要的头文件
+gcc -MM main.c     # 执行后可以自动推导并输出非C标准库以外的头文件
+```
 
