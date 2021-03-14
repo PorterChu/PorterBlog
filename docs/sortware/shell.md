@@ -183,8 +183,6 @@ uname -r                       # 查看内核版本
 history                        # 查看历史命令
 top                            # 查看CPU负载信息
   - q                          # 退出top
-  - d                          # 修改轮询间隔
-  - f                          # 选择对输出进行排序的字段
 tree -L 4 -d                   # 查看文件树，-L表示显示目录深度4，-d表示只显示目录
 cat xxx                        # 查看全部文本内容
   - cat -n xxx                 # 添加行号查看文本内容
@@ -193,26 +191,22 @@ more xxx                       # 以页面形式查看文本内容
 less xxx
 tail xxx                       # 默认仅显示文本最后10行
 head xxx                       # 默认仅显示文本前10行
-ps                             # 查看进程信息
-  - ps -ef                     # 查看所有进程并输出完整格式
-  - ps -ef | grep -i xxx       # 查看xxx(不区分大小写)进程信息
-  - ps -l
 ```
 
 3. 压缩和解压
 
 ```shell
-- unzip filename.zip           # 解压zip格式文件
-- tar -zxvf filename.tar.gz    # 解压gz格式文件
-- tar -jxvf filename.tar.xz    # 解压xz格式文件
-- tar -zxvf filename.tar.Z     # 解压Z格式文件
-- tar --help                   # 查看tar参数使用规则
+unzip filename.zip             # 解压zip格式文件
+tar -zxvf filename.tar.gz      # 解压gz格式文件
+tar -jxvf filename.tar.xz      # 解压xz格式文件
+tar -zxvf filename.tar.Z       # 解压Z格式文件
+tar --help                     # 查看tar参数使用规则
 ```
 
 4. 建立软链接
 
 ```shell
-- ln -s 源文件目录 目标文件目录  # 将源文件目录映射到目标文件目录
+ln -s 源文件目录 目标文件目录    # 将源文件目录映射到目标文件目录
 ```
 
 5. 查找文件或内容
@@ -228,22 +222,37 @@ chmod 777 *                     # 修改文件权限
 chown porter:porter xxx         # 更改xxx文件属主和属组为porter
 ```
 
-7. 终止进程
+7. 查看和终止进程
 
 ```shell
-- kill PID                      # 终止PID编号的进程
+ps                             # 查看进程信息
+  - ps -ef                     # 查看所有进程并输出完整格式
+  - ps -ef | grep -i xxx       # 查看xxx(不区分大小写)进程信息
+  - ps -l
+kill PID                        # 终止PID编号的进程
   - kill -s PID                 # 强制终止PID编号的进程
-- killall UID                   # 终止UID编号的所有进程
+killall UID                     # 终止UID编号的所有进程
 ```
 
 8. 内核模块操作
 
 ```shell
-- insmod *.ko                   # 载入内核模块
-- rmmod *.ko                    # 卸载内核模块
-- lsmod *.ko                    # 查看内核模块
-- modprobe
+insmod *.ko                     # 载入内核模块
+rmmod *.ko                      # 卸载内核模块
+lsmod *.ko                      # 查看内核模块
+modprobe
   - modprobe -l                 # 查看所有模块
   - modprobe *.ko               # 载入内核模块
   - modprobe -r *.ko            # 卸载内核模块
+```
+
+9. patch生成和应用
+
+```shell
+diff
+  - diff -u original.c new.c > patch-to-file.patch # 为某一文件创建patch
+  - diff -rupN original/ new/ > patch-to-dir.patch # 为源树创建patch
+patch -pn < xxx.diff                               # 忽略n层目录打入patch
+  - patch -p1 < xxx.diff                           # 忽略第一层目录打入patch(需要把patch放在路径中上一层目录)
+  - patch -p1 -R < xxx.patch                       # 删除patch
 ```

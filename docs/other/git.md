@@ -154,29 +154,29 @@ git cherry-pick 哈希值
 ### 3.21 git format-patch--生成补丁(patch)
 
 ```shell
-git format-patch -M master                # 当前分支所有超出master的提交打包
-git format-patch 哈希值1                  # 哈希值1之后所有的提交打包
-git format-patch --root 哈希值2           # 从根到哈希值2之间的所有提交打包
-git format-patch 哈希值3..哈希值4         # 哈希值3和哈希值4之间所有的提交打包
-git format-patch –n 哈希值5               # 包括哈希值5在内的前n次提交打包
-  - git format-patch -1 哈希值6           # 哈希值6单次提交打包
+git format-patch -M master                 # 当前分支所有超出master的提交打包
+git format-patch [哈希值]                  # 从哈希值之后所有的提交打包
+git format-patch --root [哈希值]           # 从根到指定哈希值之间的所有提交打包
+git format-patch [哈希值]..[哈希值]         # 两个哈希值之间所有的提交打包
+git format-patch –n [哈希值]               # 包含当前在内的前n次提交打包
+  - git format-patch -1 [哈希值]           # 单次提交打包
 ```
 
 ### 3.22 git am--应用补丁
 
 ```shell
-git am patch路径                         # 应用patch
-git am --abort                           # 终止应用patch
-git am --continue                        # 继续应用patch
-git am --skip                            # 跳过报错的patch
-git am --resolved                        # 解决patch引起的冲突
+git am [patch路径\diff路径]                # 应用patch
+git am --abort                            # 终止应用patch
+git am --continue                         # 继续应用patch
+git am --skip                             # 跳过报错的patch
+git am --resolved                         # 解决patch引起的冲突
 ```
 
 ### 3.23 git apply--应用补丁
 
 ```shell
-git apply patch路径                       # 应用patch
-git apply --check patch路径               # 检查patch是否可以顺利利用
+git apply --check [patch路径\diff路径]     # 检查patch是否可以顺利利用
+git apply [patch路径\diff路径]             # 应用patch
 ```
 
 ## 4. Git解疑
