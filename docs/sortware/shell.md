@@ -177,6 +177,7 @@ df                             # 查看文件系统硬盘使用情况
   - df -h                      # 使用习惯单位显示
 du                             # 统计目录或文件所占磁盘空间大小
   - du -h xxxx                 # 使用习惯单位查看文件xxxx的占用大小
+  - du -sh
 file xxx                       # 查看文件xxx类型
 uname -m                       # 查看CPU架构平台
 uname -r                       # 查看内核版本
