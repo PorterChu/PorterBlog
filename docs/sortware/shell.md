@@ -188,6 +188,7 @@ tree -L 4 -d                   # 查看文件树，-L表示显示目录深度4�
 cat xxx                        # 查看全部文本内容
   - cat -n xxx                 # 添加行号查看文本内容
   - cat -b xxx                 # 仅添加文本行号查看文本内容
+  - cat /etc/issue             # 查看服务器版本
 more xxx                       # 以页面形式查看文本内容
 less xxx
 tail xxx                       # 默认仅显示文本最后10行
