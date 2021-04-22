@@ -193,6 +193,10 @@ more xxx                       # 以页面形式查看文本内容
 less xxx
 tail xxx                       # 默认仅显示文本最后10行
 head xxx                       # 默认仅显示文本前10行
+dmesg                          # 用于检查和控制内核的ring buff的消息，路径/var/log/dmesg
+  - dmesg -c                   # 显示信息后清楚ring buff中的内容
+  - dmesg -s                   # 设置缓冲区大小，预设值8196
+  - dmesg -n                   # 设置记录信息的层级
 ```
 
 3. 压缩和解压
@@ -240,9 +244,10 @@ killall UID                     # 终止UID编号的所有进程
 8. 内核模块操作
 
 ```shell
-insmod *.ko                     # 载入内核模块
-rmmod *.ko                      # 卸载内核模块
-lsmod *.ko                      # 查看内核模块
+insmod *.ko                     # install module，载入内核模块
+rmmod *                         # remove module，卸载内核模块，注意不需要添加.ko后缀
+lsmod *.ko                      # list module，查看内核模块
+modinfo *.ko                    # module information，打印内核模块信息
 modprobe
   - modprobe -l                 # 查看所有模块
   - modprobe *.ko               # 载入内核模块

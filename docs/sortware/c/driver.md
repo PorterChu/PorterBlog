@@ -39,7 +39,7 @@ int register_chrdev_region(dev_t from, unsigned count, const char *name);
 
 dev_t dev = 0;
 
-int __init demo_init(void)
+static int __init demo_init(void)
 {
     int ret = 0;
     //生成设备号
@@ -58,7 +58,7 @@ failure_register_chrdev:
     return ret;
 }
 
-void __exit demo_exit(void)
+static void __exit demo_exit(void)
 {
 	//注销设备号
 	unregister_chrdev_region(dev, demo_COUNT);
@@ -66,6 +66,13 @@ void __exit demo_exit(void)
 
 module_init(demo_init);
 module_exit(demo_exit);
+```
+
+- 注释
+
+```shell
+__init: 函数修饰符，定义于<linux/init.h>，本质上是一个宏定义，作用是将修饰的函数放入.init.text段中(默认下函数被放入.text段中)，所有内核模块的__init修饰的函数会被统一放在一起，内核启动时会统一加载.init.text段中的模块安装函数，加载完就会把这个段给释放掉以节省内存，此类修饰符与具体功能无关。
+__exit: 同上
 ```
 
 ### 动态申请设备号函数
