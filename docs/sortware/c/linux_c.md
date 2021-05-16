@@ -774,3 +774,4 @@ cmd is 17
 
 ## 10. mmap函数
 
+## 11. malloc、ralloc、valloc、memalign、free函数

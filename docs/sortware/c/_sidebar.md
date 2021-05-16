@@ -5,4 +5,3 @@
 * [main函数的思考](./main.md)
 * [C语言小扩展](./knowledge.md)
 * [C语言小测试](./interview_question.md)
-* [Linux调试记录](./linux_debug.md)

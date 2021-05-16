@@ -1,3 +1,3 @@
 * [C编程](./c/README.md)
 * [Shell编程](./shell.md)
-* [熟练掌握Makefile](./makefile.md)
+* [Linux调试记录](./linux_debug.md)

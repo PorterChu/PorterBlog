@@ -1,5 +1,6 @@
-* [Markdown语法](./markdown.md)
 * [Git指南](./git.md)
 * [Repo指南](./repo.md)
+* [Markdown语法](./markdown.md)
 * [Docsify配置](./docsify.md)
+* [熟练掌握Makefile](./makefile.md)
 * [VScode远程Ubuntu调试](./remoteSSH.md)
