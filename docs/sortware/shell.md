@@ -202,11 +202,12 @@ dmesg                          # 用于检查和控制内核的ring buff的消�
 3. 压缩和解压
 
 ```shell
-unzip filename.zip             # 解压zip格式文件
-tar -zxvf filename.tar.gz      # 解压gz格式文件
-tar -jxvf filename.tar.xz      # 解压xz格式文件
-tar -zxvf filename.tar.Z       # 解压Z格式文件
-tar --help                     # 查看tar参数使用规则
+unzip filename.zip                           # 解压zip格式文件
+tar czvf filename.tar.gz file1 file2 ...     # 多个文件压缩成gz格式
+tar -zxvf filename.tar.gz                    # 解压gz格式文件
+tar -jxvf filename.tar.xz                    # 解压xz格式文件
+tar -zxvf filename.tar.Z                     # 解压Z格式文件
+tar --help                                   # 查看tar参数使用规则
 ```
 
 4. 建立软链接
