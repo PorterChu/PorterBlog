@@ -115,6 +115,7 @@ git branch -D 分支1          # 强制删除分支1
 
 ```shell
 git checkout -b 分支1 origin/分支2  # 创建本地分支1并切换到分支1，同时将本地分支1与远端分支2连接
+git checkout -- *                  # 放弃所有修改，恢复原始内容
 ```
 
 ### 3.16 git reset--回溯历史版本
