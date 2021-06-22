@@ -220,7 +220,7 @@ ln -s 源文件目录 目标文件目录    # 将源文件目录映射到目标�
 
 ```shell
 find 路径 -name "xxx"             # 路径表示想要在哪个目录下找到xxx文件
-grep -nR "xxx"                    # 查找xxx内容
+grep -Inr "xxx"                    # 查找xxx内容
 ```
 
 6. 修改权限
