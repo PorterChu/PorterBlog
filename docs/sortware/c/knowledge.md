@@ -406,6 +406,50 @@ void func3(){}        //表示将标识符为r1的func3的函数代码存放在.
 #pragma pack(push)       //按照指定的对齐字节压入
 #pragma pack(pop)        //按照指定的对齐字节弹出
 #pragma pack(push,4)     //等同于#pragma pack(push)和#pragma pack(4)的组合，作用是按照4字节对齐方式压入内存中存放
-__attribute(aligned(n))  //结构体成员以n字节来对齐，如果结构中有成员的字节长度大于n，则按照最大成员的长度来对齐，通常__attribute(aligned(n))放在结构体定义的最后
-__attribute((packed))    //取消结构在编译过程中的优化对齐，按照实际占用字节数进行对齐
+__attribute__(aligned(n))  //结构体成员以n字节来对齐，如果结构中有成员的字节长度大于n，则按照最大成员的长度来对齐，通常__attribute(aligned(n))放在结构体定义的最后
+__attribute__((packed))    //取消结构在编译过程中的优化对齐，按照实际占用字节数进行对齐
 ```
+
+## 扩展之__attribute__解析
+
+- 说明
+
+__attribute__机制是GNU C的一大特色，__attribute__可以设置函数属性(Function Attribute)、变量属性(Variable Attribute)和类型属性(Type Attribute)。
+
+- 使用
+
+1. __attribute__(aligned)
+
+指定对象的对齐格式(以字节为单位)，若不指定则使用最大最有益的对齐方式，如：
+
+```c
+// 指定以8字节对齐
+typedef int int32_t __attribute__((aligned(8))); 
+// 不指定对齐长度，但默认使用8字节对齐
+struct S {short b[3];} __attribute__((aligned));
+```
+
+2. __attribute__(packed)
+
+
+3. __attribute__(transparent_union)
+
+4. __attribute__(unused)
+
+程序中定义了静态函数，如果没有去使用，编译时会有告警，使用__attribute__(unused)可以忽视警告，如：
+
+```c
+#include <stdio.h>
+int main(void)
+{
+    printf("main\n");
+}
+__attribute__((unused)) static void a(void)
+{
+    printf("a\n");
+}
+```
+
+5. __attribute__(deprecated)
+
+6. __attribute__(may_alias)
