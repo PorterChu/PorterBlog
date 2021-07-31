@@ -261,7 +261,9 @@ modprobe
 diff
   - diff -u original.c new.c > patch-to-file.patch # 为某一文件创建patch
   - diff -rupN original/ new/ > patch-to-dir.patch # 为源树创建patch
+git format-patch -1 xxx(哈希值)
 patch -pn < xxx.diff                               # 忽略n层目录打入patch
   - patch -p1 < xxx.diff                           # 忽略第一层目录打入patch(需要把patch放在路径中上一层目录)
   - patch -p1 -R < xxx.patch                       # 删除patch
+git am xxx.patch
 ```
