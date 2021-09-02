@@ -267,3 +267,9 @@ patch -pn < xxx.diff                               # 忽略n层目录打入patch
   - patch -p1 -R < xxx.patch                       # 删除patch
 git am xxx.patch
 ```
+
+10. 挂载和卸载
+
+```shell
+mount -o rw,remount /  # 以读写和重新挂载的方式对当前路径进行挂载操作
+```
