@@ -60,24 +60,28 @@ git commit --amend           # 修改提交信息，补偿提交
 ### 3.8 git log--查看提交日志
 
 ```shell
-git log -2                   # 显示最近的两次提交
-git log -p 文件              # 显示文件的改动详情
+git log -2                                   # 显示最近的两次提交
+git log -p 文件                              # 显示文件的改动详情
 git log --pretty             
-  - git log --pretty=oneline   # 将提交信息放在一行显示
-  - git log --pretty=short     # 将提交信息简短显示
-  - git log --pretty=full      # 将提交信息详细显示
-  - git log --pretty=fuller    # 将提交信息全部显示
+  - git log --pretty=oneline                 # 将提交信息放在一行显示
+  - git log --pretty=short                   # 将提交信息简短显示
+  - git log --pretty=full                    # 将提交信息详细显示
+  - git log --pretty=fuller                  # 将提交信息全部显示
   - git log --pretty=format
+- git log --since=2019-1-1 --until=20191-30  # 查询2019/1/1-2019/1/30之间的提交记录
+- git log --author="Porter"                  # 查询作者为Porter的提交记录
+- git log --graph                            # 以图标形式查看分支
 ```
 
 |选项|说明|
 |:--:|:--:|
 |%H|提交对象的完整哈希值|
 |%h|提交对象的简短哈希值|
-
-```shell
-git log --graph              # 以图标形式查看分支
-```
+|-n|查询最近n条提交|
+|--since,--after|查询指定时间之后的提交|
+|--until,--before|查询指定时间之前的提交|
+|--author|查询指定作者的提交|
+|--committer|查询指定提交者的提交|
 
 ### 3.9 git reflog--查看当前仓库的操作日志
   
