@@ -219,8 +219,10 @@ ln -s 源文件目录 目标文件目录    # 将源文件目录映射到目标�
 5. 查找文件或内容
 
 ```shell
-find 路径 -name "xxx"             # 路径表示想要在哪个目录下找到xxx文件
-grep -nR "xxx"                    # 查找xxx内容
+find 路径 -name "xxx"                         # 路径表示想要在哪个目录下找到xxx文件
+grep -nR "xxx"                                # 查找xxx内容
+  - grep -nr "xxx" --exclude-dir={dir1,dir2}  # 在非dir1和dir2的路径下查找xxx内容
+  - grep -nr "xxx" --exclude=*.so             # 排除*.so文件下查找xxx内容
 ```
 
 6. 修改权限
