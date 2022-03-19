@@ -1,4 +1,5 @@
-* [Linux_C编程](./c/README.md)
+* [Linux_C编程](./linux_c/README.md)
+* [Linux设备驱动](./linux_driver/README.md)
+* [Linux内核](./linux_kernel/README.md)
 * [Shell编程](./shell.md)
-* [Linux调试记录](./linux_debug.md)
-* [Linux内核记录](./linux_kernel.md)
+* [熟练掌握Makefile](./makefile.md)

@@ -1,4 +1,4 @@
-## 字符设备驱动
+## 字符设备注册
 
 ### 静态申请设备号函数
 
@@ -15,7 +15,7 @@
 *       count:向内核申请的设备号数目
 *       name:向内核申请的设备号名称(通过cat /proc/devices查看)
 * return:
-*       0:success, or means failed 
+*       0:success, 否侧返回错误码
 * remark:
 *       MKDEV:设备号(包括主设备号+次设备号，主设备号<<20 + 次设备号，4字节32bit中前12bit为唯一主设备号，后20bit为次设备号，次设备号从0开始)
 *       MAJOR:主设备号
@@ -31,7 +31,9 @@ int register_chrdev_region(dev_t from, unsigned count, const char *name);
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/fs.h>
-#include <linux/fs.h>
+#include <linux/types.h>
+#include <linux/kdev_t.h>
+#include <linux/errno.h>
 
 #define demo_MAJOR	168
 #define demo_MINOR	0

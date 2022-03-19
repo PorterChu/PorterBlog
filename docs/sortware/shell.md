@@ -248,14 +248,14 @@ killall UID                     # 终止UID编号的所有进程
 8. 内核模块操作
 
 ```shell
-insmod *.ko                     # install module，载入内核模块
-rmmod *                         # remove module，卸载内核模块，注意不需要添加.ko后缀
-lsmod *.ko                      # list module，查看内核模块
-modinfo *.ko                    # module information，打印内核模块信息
+insmod *.ko              # install module，载入内核模块
+rmmod *                  # remove module，卸载内核模块，注意不需要添加.ko后缀
+lsmod *.ko               # list module，通过读取/proc/modules虚拟文件来查看内核模块，也可以在/sfs/modules下找到模块信息
+modinfo *.ko             # module information，打印内核模块信息
 modprobe
-  - modprobe -l                 # 查看所有模块
-  - modprobe *.ko               # 载入内核模块
-  - modprobe -r *.ko            # 卸载内核模块
+  - modprobe -l          # 查看所有模块
+  - modprobe *.ko        # 载入内核模块，与insmod的区别是modprobe会同时将依赖的模块一起载入内核
+  - modprobe -r *.ko     # 卸载内核模块
 ```
 
 9. patch生成和应用
