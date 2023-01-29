@@ -53,3 +53,11 @@ gcc -c 文件名      //汇编过程，生成.o文件
 - 第三步：选择`控制面板->程序与功能->启用或关闭Windows功能`，取消`Hyper-V`的勾选，点击`确定`按钮；
 - 第四步：按`win+X`键以管理员身份运营Windows PowerShell，输入`bcdedit /set hypervisorlaunchtype off`，如果后期要重启开启Hyper，可以同样在PowerShell下输入`bcdedit /set hypervisorlaunchtype auto`;
 - 第五步：重启电脑后，运行VMware Workstation就可正常工作了。
+
+## 4. dos与unix换行符不兼容
+
+碰到在bash中报`syntax error near unexpected token $'\r''`，或者在Kconfig中报`syntax error`错误时，可以通过`vi -b`的命令查看对应的文件，发现文件中每一行结尾多了`^M`的换行符，问题出在此处，可以使用如果命令进行转换：
+
+```shell
+dos2unix file   # 转换windows换行符为unix换行符
+```
